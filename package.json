@@ -1,0 +1,39 @@
+{
+  "name": "flow.fastflowdebate",
+  "version": "1.0.0",
+  "description": "FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "./node_modules/.bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FastFlowDebate/Flow.FastFlowDebate.git"
+  },
+  "keywords": [
+    "debate",
+    "public",
+    "forum"
+  ],
+  "author": "Adam Towers",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues"
+  },
+  "homepage": "https://github.com/FastFlowDebate/Flow.FastFlowDebate#readme",
+  "dependencies": {
+    "angular": "^1.6.2",
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.10.1",
+    "idb": "^2.0.0",
+    "imports-loader": "^0.7.0",
+    "jquery": "^3.1.1",
+    "materialize-css": "^0.98.0",
+    "style-loader": "^0.13.1",
+    "sw-toolbox": "^3.5.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.2.1",
+    "webpack-uglify-js-plugin": "^1.1.9"
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="flow" ng-controller="flowCtrl">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="build/bundle.js"></script>
+
+<body>
+	<nav>
+		<div class="nav-wrapper purple">
+			<a href="#" class="brand-logo">Flow</a>
+			<ul class="right">
+				<li><a ng-click="lsManagerOpen()"><i class="material-icons">dashboard</i></a></li>
+			</ul>
+		</div>
+	</nav>
+	<main>
+		<div class="input-field card">
+			<input placeholder="Flow Title: ToC Finals 2016" id="flowTitle" type="text" ng-model="flow.title">
+			<a ng-click="emitExpand()" class="flowExpandBtn"><i class="material-icons md-30">transform</i></a>
+		</div>
+		<div id="flowContainer">
+			<flow data="flow.dataL" id="L" team="flow.leftTeam"></flow>
+			<flow data="flow.dataR" id="R" team="flow.rightTeam"></flow>
+		</div>
+	</main>
+	<a ng-click="save()" id="FAB__save" ng-show="!isSaved" class="btn-floating btn-large waves-effect waves-light purple"><i class="material-icons">save</i></a>
+	<div class="version__indicator">v{{version}}</div>
+</body>
+<div ng-controller="lsManager">
+	<div id="lsManagerModal" class="modal">
+		<div class="modal-content">
+			<h4>Manage Saved Flows</h4> {{message}}
+			<table class="highlight">
+				<thead>
+					<tr>
+						<th data-field="Name">Name</th>
+						<th data-field="Team1">Team</th>
+						<th data-field="Team2">Team</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="f in flowTable">
+						<td>{{f.name}}</td>
+						<td>{{f.teamL}}</td>
+						<td>{{f.teamR}}</td>
+						<td><a ng-click="open(f.id)" class="waves-effect waves-green btn-flat"><i class="material-icons">send</i></a></td>
+						<td><a ng-click="beginDelete(f.id)" class="waves-effect waves-red btn-flat"><i class="material-icons">close</i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Nevermind</a>
+		</div>
+	</div>
+	<div id="delConfirmation" class="modal">
+		<div class="modal-content">
+			<h4>Delete Modal</h4>
+			<p>Are You sure you would like to delete this flow, this action is not reversible.</p>
+		</div>
+		<div class="modal-footer">
+			<a ng-click="completeDelete()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>
+			<button class="modal-action modal-close waves-effect waves-red btn-flat">Nevermind</button>
+		</div>
+	</div>
+</div>
+</html>
