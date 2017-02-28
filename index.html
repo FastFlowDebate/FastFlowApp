@@ -2,7 +2,7 @@
 <html ng-app="flow" ng-controller="flowCtrl">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="build/bundle.js"></script>
-
+<div class="version__indicator">v{{version}}</div>
 <body>
 	<nav>
 		<div class="nav-wrapper purple">
@@ -23,7 +23,6 @@
 		</div>
 	</main>
 	<a ng-click="save()" id="FAB__save" ng-show="!isSaved" class="btn-floating btn-large waves-effect waves-light purple"><i class="material-icons">save</i></a>
-	<div class="version__indicator">v{{version}}</div>
 </body>
 <div ng-controller="lsManager">
 	<div id="lsManagerModal" class="modal">
@@ -68,10 +67,8 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-92780519-2', 'auto');
+  ga('create', 'UA-92780519-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 
 </html>

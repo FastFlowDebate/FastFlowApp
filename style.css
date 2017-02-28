@@ -6,7 +6,6 @@
 
 html {
   height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -15,7 +14,6 @@ body {
   min-height: 100%;
   flex-direction: column;
   margin: 0;
-  overflow: hidden;
 }
 
 #navImg {
@@ -59,9 +57,10 @@ main > .input-field:hover {
 }
 
 .version__indicator {
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
+  z-index: 10;
+  position: fixed;
+  left: 0.1vw;
+  bottom: 0.1vh;
 }
 @media only screen and (min-width: 992px) {
   .brand-logo {
