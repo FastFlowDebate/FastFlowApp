@@ -15,14 +15,14 @@
 	<main>
 		<div class="input-field card">
 			<input placeholder="Flow Title: ToC Finals 2016" id="flowTitle" type="text" ng-model="flow.title">
-			<a ng-click="emitExpand()" class="flowExpandBtn"><i class="material-icons md-30">transform</i></a>
+			<a ng-click="save()" ng-show="!isSaved" class="saveBtn titleBtn"><i class="material-icons md-30">save</i>Save</a>
+			<a ng-click="emitExpand()" class="flowExpandBtn titleBtn"><i class="material-icons md-30">transform</i></a>
 		</div>
 		<div id="flowContainer">
 			<flow data="flow.dataL" id="L" team="flow.leftTeam"></flow>
 			<flow data="flow.dataR" id="R" team="flow.rightTeam"></flow>
 		</div>
 	</main>
-	<a ng-click="save()" id="FAB__save" ng-show="!isSaved" class="btn-floating btn-large waves-effect waves-light purple"><i class="material-icons">save</i></a>
 </body>
 <div ng-controller="lsManager">
 	<div id="lsManagerModal" class="modal">
@@ -48,7 +48,7 @@
 			</table>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Nevermind</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</a>
 		</div>
 	</div>
 	<div id="delConfirmation" class="modal">
@@ -58,7 +58,7 @@
 		</div>
 		<div class="modal-footer">
 			<a ng-click="completeDelete()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>
-			<button class="modal-action modal-close waves-effect waves-red btn-flat">Nevermind</button>
+			<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
 		</div>
 	</div>
 </div>

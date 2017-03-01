@@ -87,12 +87,6 @@ flow {
   height: auto;
 }
 
-#FAB__save {
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-}
-
 .flow {
   vertical-align: top;
   display: inline-block;
@@ -112,29 +106,31 @@ flow {
   border-bottom: none !important;
   box-shadow: none !important;
 }
-
 .flowExpanded {
   width: 99%;
 }
-
 .md-30 {
   line-height: 45px;
   font-size: 30px;
 }
-
+.saveBtn {
+  right: 50px;
+  top: 0;
+}
 .flowExpandBtn {
+  right: 0;
+  top: 0;
+}
+.titleBtn {
   height: 100%;
   width: 45px;
   position: absolute;
-  right: 0;
-  top: 0;
   color: #424242;
   opacity: 0.3;
   cursor: pointer;
   z-index: 2;
 }
-
-.flowExpandBtn:hover {
+.titleBtn:hover {
   opacity: 1;
 }
 

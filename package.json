@@ -1,6 +1,6 @@
 {
   "name": "flow.fastflowdebate",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities",
   "main": "index.html",
   "scripts": {
