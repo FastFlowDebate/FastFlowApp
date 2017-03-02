@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html ng-app="flow" ng-controller="flowCtrl">
+<head>
+	<title>Flow</title>
+	<meta charset="utf-8"><!-- html5 version of http-equiv="Content-Type"... -->
+	<meta name="description" content="FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities">
+	<meta name="keywords" content="Debate">
+	<link rel="author" href="http://atowers.info" />
+	<link rel="canonical" href="https://flow.fastflowdebate.com" />
+</head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="build/bundle.js"></script>
 <div class="version__indicator">v{{version}}</div>
 <body>
 	<nav>
 		<div class="nav-wrapper purple">
-			<a href="#" class="brand-logo">Flow</a>
+			<a href="#" class="brand-logo"><img id="navImg" src="app.png"></a>
 			<ul class="right">
 				<li><a ng-click="newFlow()"><i class="material-icons">add_box</i></a></li>
 				<li><a ng-click="lsManagerOpen()"><i class="material-icons">dashboard</i></a></li>
@@ -78,7 +86,7 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-92780519-1', 'auto');
+  ga('create', 'UA-92780519-2', 'auto');
   ga('send', 'pageview');
 </script>
 

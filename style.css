@@ -17,10 +17,10 @@ body {
 }
 
 #navImg {
-  margin-top: 0.5rem;
-  margin-left: 0.5rem;
+  margin-top: 0.1em;
   display: inline;
-  height: 3.5em;
+  max-height: 0.8em;
+  font-size: 64px;
 }
 
 .title {
@@ -64,7 +64,7 @@ main > .input-field:hover {
 }
 @media only screen and (min-width: 992px) {
   .brand-logo {
-    margin-left: 2em;
+    margin-left: 1em;
   }
 }
 
