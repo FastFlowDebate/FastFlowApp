@@ -37,6 +37,7 @@ if (indexedDB && 'serviceWorker' in navigator) {
             scope: '/'
         }).then(function(registration) {
             // Registration was successful
+            registration.update()
             console.log('ServiceWorker registration successful with scope: ', registration.scope)
         }).catch(function(err) {
             // registration failed :(
@@ -54,6 +55,7 @@ var flowApp = angular.module('flow', [])
     .controller('flowCtrl', ['$scope', function($scope) {
         $('#lsManagerModal').modal()
         $('#delConfirmation').modal()
+        $('#unsavedModal').modal()
 
         $scope.flow = {}
         $scope.flow.dataL = []
@@ -61,17 +63,20 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '1.6.5'
+        $scope.version = '1.7'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
         $scope.$watch('flow', function (newVal, oldVal) {
           $scope.isSaved = false
         }, true)
-        setTimeout(function () {//change to false after it starts
-          $scope.isSaved = true
-          $scope.$apply()
-        }, 800)
+        $scope.refreshSaved = function () {
+          setTimeout(function () {//change to false after it starts
+            $scope.isSaved = true
+            $scope.$apply()
+          }, 100)
+        }
+        $scope.refreshSaved()
         $scope.openFromLS = function(n) {
             var transaction = db.transaction(["flows"], "readwrite")
             transaction.onerror = function(event) {
@@ -80,10 +85,12 @@ var flowApp = angular.module('flow', [])
             var objectStore = transaction.objectStore("flows")
             var request = objectStore.get(n)
             request.onsuccess = function(event) {
-                $scope.flow = event.target.result
-                $scope.key = n
-                $scope.isSaved = true
-                $scope.$apply()
+              console.log(event.target.result)
+              $scope.flow = event.target.result
+              $scope.key = n
+              $scope.isSaved = true
+              $scope.$apply()
+              $scope.refreshSaved()
             }
             $('#lsManagerModal').modal('close')
         }
@@ -101,6 +108,7 @@ var flowApp = angular.module('flow', [])
                     var request = objectStore.add($scope.flow)
                     request.onsuccess = function(event) {
                         $scope.key = event.target.result
+                        $scope.refreshSaved()
                     }
                 } else { //updating old flow
                     var objectStore = db.transaction(["flows"], "readwrite").objectStore("flows")
@@ -112,12 +120,33 @@ var flowApp = angular.module('flow', [])
                     }
                     requestUpdate.onsuccess = function(event) {
                         Materialize.toast('Flow updated', 3000)
+                        $scope.refreshSaved()
                     }
                 }
                 $scope.$broadcast('loadFlows', null)
             } else {
                 Materialize.toast('Needs indexedDB', 4000) // 4000 is the duration of the toast
             }
+        }
+        $scope.newFlow = function () {
+          if ($scope.isSaved) {
+            $scope.flow = {}
+            $scope.flow.dataL = []
+            $scope.flow.leftTeam = ''
+            $scope.flow.dataR = []
+            $scope.flow.rightTeam = ''
+            $scope.flow.title = ''
+            $scope.key = 0
+            $scope.refreshSaved()
+          } else {
+            $('#unsavedModal').modal('open')
+          }
+        }
+        $scope.forceNewFlow = function () {
+          $scope.isSaved = true
+          $scope.newFlow()
+          $('#unsavedModal').modal('close')
+          $scope.refreshSaved()
         }
         $scope.lsManagerOpen = function() {
             if (indexedDB) {
@@ -148,17 +177,14 @@ var flowApp = angular.module('flow', [])
           request.onsuccess = function(event) {
             for (var i = 0; i < event.target.result.length; i++) {
               var f = event.target.result[i]
-
               if (f) $scope.flowTable.push({
                   name: f.title,
                   teamL: f.leftTeam,
                   teamR: f.rightTeam,
                   id: i + 1
                 })
+              if ($scope.flowTable.length === 0) $scope.message = "No flows exist in local storage."
             }
-            console.log('flows:')
-            console.log($scope.flowTable)
-            if ($scope.flowTable.length === 0) $scope.message = "No flows exist in local storage."
             $scope.$apply()
           }
         })
