@@ -70,6 +70,9 @@ main > .input-field:hover {
   .brand-logo {
     margin-left: 1em;
   }
+  #navImg {
+    margin-top: 0.05em;
+  }
 }
 
 /*

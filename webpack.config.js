@@ -22,7 +22,7 @@ module.exports = {
         new webpackUglifyJsPlugin({
             cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
             debug: true,
-            minimize: false,
+            minimize: true,
             sourceMap: false,
             output: {
                 comments: false
