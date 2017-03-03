@@ -10,11 +10,14 @@
 </head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="build/bundle.js"></script>
-<div class="version__indicator">v{{version}}</div>
+<div class="version__indicator">b{{version}}</div>
 <body>
 	<nav>
 		<div class="nav-wrapper purple">
 			<a href="#" class="brand-logo"><img id="navImg" src="app.png"></a>
+			<div id="betaChip" class="chip blue">
+    		Beta
+  		</div>
 			<ul class="right">
 				<li><a ng-click="newFlow()"><i class="material-icons">add_box</i></a></li>
 				<li><a ng-click="lsManagerOpen()"><i class="material-icons">dashboard</i></a></li>

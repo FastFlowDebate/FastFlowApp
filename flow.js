@@ -1,15 +1,8 @@
 window.jQuery = require('jquery')
-require('materialize-css/js/initial')
-require('materialize-css/js/jquery.easing.1.3')
-require('materialize-css/js/animation')
-window.Vel = require('materialize-css/js/velocity.min')
-require('materialize-css/js/hammer.min')
-require('materialize-css/js/jquery.hammer')
-require('materialize-css/js/global')
-require('materialize-css/js/dropdown')
-require('materialize-css/js/modal')
-require('materialize-css/js/toasts')
-require('materialize-css/js/tooltip')
+window.Vel = require('materialize-css/bin/materialize')
+
+
+
 
 require('./node_modules/materialize-css/dist/css/materialize.css')
 require('./style.css')
@@ -63,7 +56,7 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '1.7.1'
+        $scope.version = '1.7.2'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 

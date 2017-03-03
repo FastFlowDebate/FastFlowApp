@@ -56,6 +56,10 @@ main > .input-field:hover {
   padding: 0.1em;
 }
 
+#betaChip {
+  margin-left: 0.5em;
+}
+
 .version__indicator {
   z-index: 10;
   position: fixed;
@@ -95,7 +99,6 @@ flow {
   height: auto;
   transition-duration: 0.6s;
 }
-
 
 .flow > .input-field {
   padding-left: 1em;
@@ -189,6 +192,7 @@ contention .input-field {
 
 arguement {
   width: auto;
+  overflow-y: visible;
 }
 
 contention:hover .boxBtn {
@@ -232,7 +236,9 @@ textarea {
 //BOX//
 //==============================================================================
 */
+.box {
 
+}
 div.input-field.constructiveTitle {
   padding-left: 0;
 }
@@ -240,7 +246,6 @@ div.input-field.constructiveTitle {
 td textarea.materialize-textarea {
   margin-top: 0;
   padding-top: 0;
-
 }
 
 .boxClose {
