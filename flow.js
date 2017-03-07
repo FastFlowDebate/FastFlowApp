@@ -1,9 +1,5 @@
 window.jQuery = require('jquery')
 window.Vel = require('materialize-css/bin/materialize')
-
-
-
-
 require('./node_modules/materialize-css/dist/css/materialize.css')
 require('./style.css')
 
@@ -56,7 +52,7 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '1.7.2'
+        $scope.version = '0.8.0'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -154,10 +150,10 @@ var flowApp = angular.module('flow', [])
           $scope.$broadcast('toggleExpand', null)
         }
         function makeTextFile(text) {
-            var data = new Blob([text], {
-                type: 'octet/stream'
-            })
-            return window.URL.createObjectURL(data)
+          var data = new Blob([text], {
+            type: 'octet/stream'
+          })
+          return window.URL.createObjectURL(data)
         }
     }])
     .controller('lsManager', ['$scope', function($scope) {
@@ -236,24 +232,19 @@ var flowApp = angular.module('flow', [])
                     }
                     return style
                 }
-
                 this.rmbox = function() {
                     this.removeBox({
-                        index: this.boxindex
+                        index: this.index
                     })
                 }
-
                 this.critical = false
-
                 this.toggleCritical = function() {
                     this.critical = !this.critical
                 }
-
                 this.isCritical = function() {
                     if (this.critical) return 'boxCriticalBorder'
                     return ''
                 }
-
                 this.getStyle = function(type) {
                     return this.color(type, this.isCritical())
                 }
@@ -270,35 +261,37 @@ var flowApp = angular.module('flow', [])
             scope: {
                 boxes: '=',
                 index: '=argindex',
-                removeArguement: '&argrm'
+                removeArgument: '&argrm'
             },
             controller: function() {
-                $('.tooltipped').tooltip()
-                this.extend = function() {
-                    this.boxes.push({
-                        "type": "extension",
-                        "text": ""
-                    })
-                }
-                this.respond = function() {
-                    this.boxes.push({
-                        "type": "response",
-                        "text": ""
-                    })
-                }
-                this.arrow = function() {
-                    this.boxes.push({
-                        "type": "arrow"
-                    })
-                }
-                this.removeBox = function(index) {
-                    this.boxes.splice(index, 1)
-                }
-                this.rmarg = function() {
-                    this.removeArguement({
-                        index: this.argindex
-                    })
-                }
+              $('.tooltipped').tooltip()
+              this.extend = function() {
+                  this.boxes.push({
+                      "type": "extension",
+                      "text": ""
+                  })
+              }
+              this.respond = function() {
+                  this.boxes.push({
+                      "type": "response",
+                      "text": ""
+                  })
+              }
+              this.arrow = function() {
+                  this.boxes.push({
+                      "type": "arrow"
+                  })
+              }
+              this.removeBox = function(index) {
+                  this.boxes.splice(index, 1)
+              }
+              this.rmarg = function() {
+                  $('.tooltipped').tooltip('remove') //closes then reinitializes all the tooltips
+                  $('.tooltipped').tooltip()
+                  this.removeArgument({
+                      index: this.index
+                  })
+              }
             },
             controllerAs: 'a',
             bindToController: true,
@@ -310,19 +303,29 @@ var flowApp = angular.module('flow', [])
             restrict: 'E',
             scope: {
                 args: '=',
-                name: '='
+                name: '=',
+                index: '=contindex',
+                removeContention: '&contrm'
             },
             controller: function() {
-                this.newArg = function() {
-                    this.args.push([{
-                        "title": "",
-                        "text": "",
-                        "type": "constructive"
-                    }])
-                }
-                this.removeArguement = function(index) {
-                    this.args.splice(index, 1)
-                }
+              $('.tooltipped').tooltip()
+              this.newArg = function() {
+                this.args.push([{
+                    "title": "",
+                    "text": "",
+                    "type": "constructive"
+                }])
+              }
+              this.removeArgument = function(index) { //removing arguement from contention
+                this.args.splice(index, 1)
+              }
+              this.rmcont = function() { //remove contention called from the contention
+                $('.tooltipped').tooltip('remove')
+                $('.tooltipped').tooltip()
+                this.removeContention({
+                    index: this.index
+                })
+              }
             },
             controllerAs: 'c',
             bindToController: true,
@@ -340,17 +343,20 @@ var flowApp = angular.module('flow', [])
             controller: function() {
                 this.expand = false
                 this.toggleExpand = function() {
-                    this.expand = !this.expand
+                  this.expand = !this.expand
                 }
                 this.isExpanded = function() {
-                    if (this.expand) return 'flowExpanded flow'
-                    else return 'flow'
+                  if (this.expand) return 'flowExpanded flow'
+                  else return 'flow'
                 }
                 this.newContention = function() {
-                    this.data.push({
-                        "title": "",
-                        "args": []
-                    })
+                  this.data.push({
+                      "title": "",
+                      "args": []
+                  })
+                }
+                this.removeContention = function(index) {
+                  this.data.splice(index, 1)
                 }
             },
             link: function(scope, element, attr, ctrl) {

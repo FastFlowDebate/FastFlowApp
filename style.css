@@ -65,6 +65,7 @@ main > .input-field:hover {
   position: fixed;
   left: 0.1vw;
   bottom: 0.1vh;
+  color: white;
 }
 @media only screen and (min-width: 992px) {
   .brand-logo {
@@ -72,6 +73,9 @@ main > .input-field:hover {
   }
   #navImg {
     margin-top: 0.05em;
+  }
+  #betaChip {
+    margin-left: 8em;
   }
 }
 
@@ -182,6 +186,19 @@ contention .input-field {
   padding-left: 1em;
 }
 
+.contention__close {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  color: #424242;
+  opacity: 0.3;
+  cursor: pointer;
+}
+.contention__close:hover {
+  opacity: 1.0;
+  transition-duration: 0.3s;
+}
+
 /*
 //==============================================================================
 //ARGUEMENT//
@@ -223,7 +240,8 @@ textarea {
 .boxBtn {
   opacity: 0.2;
   margin-bottom: 0.2em;
-
+  width: 30px;
+  height: 30px;
 }
 
 .boxBtn:hover {
@@ -231,6 +249,7 @@ textarea {
 }
 
 .boxBtn > i {
+  line-height: 30px;
 
 }
 

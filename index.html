@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="flow" ng-controller="flowCtrl">
+
 <head>
 	<title>Flow</title>
-	<meta charset="utf-8"><!-- html5 version of http-equiv="Content-Type"... -->
+	<meta charset="utf-8">
+	<!-- html5 version of http-equiv="Content-Type"... -->
 	<meta name="description" content="FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities">
 	<meta name="keywords" content="Debate">
 	<link rel="author" href="http://atowers.info" />
@@ -10,14 +12,15 @@
 </head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="build/bundle.js"></script>
-<div class="version__indicator">b{{version}}</div>
+<div class="version__indicator">{{version}}</div>
+
 <body>
 	<nav>
 		<div class="nav-wrapper purple">
 			<a href="#" class="brand-logo"><img id="navImg" src="app.png"></a>
 			<div id="betaChip" class="chip blue">
-    		Beta
-  		</div>
+				Beta
+			</div>
 			<ul class="right">
 				<li><a ng-click="newFlow()"><i class="material-icons">add_box</i></a></li>
 				<li><a ng-click="lsManagerOpen()"><i class="material-icons">dashboard</i></a></li>
@@ -35,6 +38,14 @@
 			<flow data="flow.dataR" id="R" team="flow.rightTeam"></flow>
 		</div>
 	</main>
+	<footer class="page-footer purple">
+		<div class="footer-copyright purple darken-1">
+			<div class="container">
+				Adam Towers
+				<a class="grey-text text-lighten-4 right" href="https://github.com/FastFlowDebate/Flow.FastFlowDebate">Github Repo</a>
+			</div>
+		</div>
+	</footer>
 </body>
 <div ng-controller="lsManager">
 	<div id="lsManagerModal" class="modal">
@@ -85,12 +96,19 @@
 	</div>
 </div>
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-92780519-2', 'auto');
-  ga('send', 'pageview');
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+	ga('create', 'UA-92780519-2', 'auto');
+	ga('send', 'pageview');
 </script>
 
 </html>
