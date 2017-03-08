@@ -24,6 +24,7 @@
 			<ul class="right">
 				<li><a ng-click="newFlow()"><i class="material-icons">add_box</i></a></li>
 				<li><a ng-click="lsManagerOpen()"><i class="material-icons">dashboard</i></a></li>
+				<li><a ng-click="info()"><i class="material-icons">info</i></a></li>
 			</ul>
 		</div>
 	</nav>
@@ -92,6 +93,31 @@
 		<div class="modal-footer">
 			<a ng-click="forceNewFlow()" class="modal-action modal-close waves-effect waves-red btn-flat">Continue</a>
 			<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
+		</div>
+	</div>
+</div>
+<div ng-controller="infoModal">
+	<div id="infoModal" class="modal">
+		<div class="modal-content">
+			<h3>Flow.FastFlow</h3>
+			<hr>
+			<div id="browser-support__modal">
+				<h4>Browser Information:</h4>
+				<div class="browser-support__entry">
+					Offline Support: <i ng-show="{{serviceWorker}}" class="material-icons md-30">check</i><i ng-hide="{{serviceWorker}}" class="material-icons">close</i>
+				</div>
+				<div class="browser-support__entry">
+					Save Flows: <i ng-show="{{indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{indexedDB}}" class="material-icons">close</i>
+				</div>
+			</div>
+			<hr>
+			<h4>Offline:</h4>
+			Access the offline app by opening the web page once and refreshing it. After that, you can close the tab, turn off your internet, and navigate back to the page and it should load. Magic! Saved flows are also accessible offline as they are saved to your browser.
+			<hr>
+			<h4>Feedback:</h4>
+			Please make any bug reports as issues on the <a href="https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues">Github</a>. Private messaging me on Reddit at u/Zarkoix also works.
+		</div>
+		<div class="modal-footer">
 		</div>
 	</div>
 </div>

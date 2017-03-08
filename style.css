@@ -327,3 +327,15 @@ td textarea.materialize-textarea {
 #lsManagerModal > .modal-content > td {
   width: 100px;
 }
+
+/*
+//==============================================================================
+//infoModal//
+//==============================================================================
+*/
+.browser-support__entry {
+  line-height: 2em;
+}
+.browser-support__entry > i {
+  vertical-align: middle;
+}

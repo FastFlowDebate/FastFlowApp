@@ -43,6 +43,7 @@ var angular = require('angular')
 var flowApp = angular.module('flow', [])
     .controller('flowCtrl', ['$scope', function($scope) {
         $('#lsManagerModal').modal()
+        $('#infoModal').modal()
         $('#delConfirmation').modal()
         $('#unsavedModal').modal()
 
@@ -52,7 +53,7 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.0'
+        $scope.version = '0.8.1'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -74,7 +75,6 @@ var flowApp = angular.module('flow', [])
             var objectStore = transaction.objectStore("flows")
             var request = objectStore.get(n)
             request.onsuccess = function(event) {
-              console.log(event.target.result)
               $scope.flow = event.target.result
               $scope.key = n
               $scope.isSaved = true
@@ -146,6 +146,9 @@ var flowApp = angular.module('flow', [])
                 Materialize.toast('Needs indexedDB', 4000) // 4000 is the duration of the toast
             }
         }
+        $scope.info = function () {
+          $('#infoModal').modal('open')
+        }
         $scope.emitExpand = function () {
           $scope.$broadcast('toggleExpand', null)
         }
@@ -169,12 +172,22 @@ var flowApp = angular.module('flow', [])
               if (f) $scope.flowTable.push({
                   name: f.title,
                   teamL: f.leftTeam,
-                  teamR: f.rightTeam,
-                  id: i + 1
+                  teamR: f.rightTeam
                 })
-              if ($scope.flowTable.length === 0) $scope.message = "No flows exist in local storage."
             }
-            $scope.$apply()
+            if ($scope.flowTable.length === 0) {
+              $scope.message = "No flows exist in local storage."
+              $scope.$apply()
+            } else {
+              var requestKeys = db.transaction(["flows"]).objectStore("flows").getAllKeys()
+              requestKeys.onsuccess = function(event) { //indexeddb getall does not return keys with the objects, have to add keys to the entry after
+                for (var i = 0; i < event.target.result.length; i++) {
+                  var f = event.target.result[i]
+                  $scope.flowTable[i].id = f
+                }
+                $scope.$apply()
+              }
+            }
           }
         })
         $('.dropdown-button').dropdown({
@@ -202,6 +215,10 @@ var flowApp = angular.module('flow', [])
             $scope.$broadcast('loadFlows', null)
           }
         }
+    }])
+    .controller('infoModal', ['$scope', function($scope) {
+      $scope.serviceWorker = 'serviceWorker' in navigator ? true : false
+      $scope.indexedDB = indexedDB ? true : false
     }])
     .config([
         '$compileProvider',
