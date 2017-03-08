@@ -53,7 +53,7 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.2'
+        $scope.version = '0.8.3'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -64,7 +64,8 @@ var flowApp = angular.module('flow', [])
         xhr.onload = function(e) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                  var newVer = xhr.responseText
+                  var newVer = JSON.parse(xhr.responseText).version
+                  console.log(newVer + ' ' + $scope.version)
                   if(newVer !== $scope.version) $scope.version += ' |-> ' + newVer
                 } else {
                   console.error(xhr.statusText)
