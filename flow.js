@@ -53,18 +53,38 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.1'
+        $scope.version = '0.8.2'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
-        $scope.$watch('flow', function (newVal, oldVal) {
-          $scope.isSaved = false
+        //check the most uptodate verion number mwahhahah
+        var xhr = new XMLHttpRequest()
+        xhr.open("GET", "https://api.github.com/repos/FastFlowDebate/Flow.FastFlowDebate/contents/package.json", true)
+        xhr.setRequestHeader("Accept", "application/vnd.github.VERSION.raw")
+        xhr.onload = function(e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                  var newVer = xhr.responseText
+                  if(newVer !== $scope.version) $scope.version += ' |-> ' + newVer
+                } else {
+                  console.error(xhr.statusText)
+                }
+            }
+        }
+        xhr.onerror = function(e) {
+            console.error(xhr.statusText)
+        }
+        xhr.send(null)
+
+
+        $scope.$watch('flow', function(newVal, oldVal) {
+            $scope.isSaved = false
         }, true)
-        $scope.refreshSaved = function () {
-          setTimeout(function () {//change to false after it starts
-            $scope.isSaved = true
-            $scope.$apply()
-          }, 100)
+        $scope.refreshSaved = function() {
+            setTimeout(function() { //change to false after it starts
+                $scope.isSaved = true
+                $scope.$apply()
+            }, 100)
         }
         $scope.refreshSaved()
         $scope.openFromLS = function(n) {
@@ -75,11 +95,11 @@ var flowApp = angular.module('flow', [])
             var objectStore = transaction.objectStore("flows")
             var request = objectStore.get(n)
             request.onsuccess = function(event) {
-              $scope.flow = event.target.result
-              $scope.key = n
-              $scope.isSaved = true
-              $scope.$apply()
-              $scope.refreshSaved()
+                $scope.flow = event.target.result
+                $scope.key = n
+                $scope.isSaved = true
+                $scope.$apply()
+                $scope.refreshSaved()
             }
             $('#lsManagerModal').modal('close')
         }
@@ -117,25 +137,25 @@ var flowApp = angular.module('flow', [])
                 Materialize.toast('Needs indexedDB', 4000) // 4000 is the duration of the toast
             }
         }
-        $scope.newFlow = function () {
-          if ($scope.isSaved) {
-            $scope.flow = {}
-            $scope.flow.dataL = []
-            $scope.flow.leftTeam = ''
-            $scope.flow.dataR = []
-            $scope.flow.rightTeam = ''
-            $scope.flow.title = ''
-            $scope.key = 0
-            $scope.refreshSaved()
-          } else {
-            $('#unsavedModal').modal('open')
-          }
+        $scope.newFlow = function() {
+            if ($scope.isSaved) {
+                $scope.flow = {}
+                $scope.flow.dataL = []
+                $scope.flow.leftTeam = ''
+                $scope.flow.dataR = []
+                $scope.flow.rightTeam = ''
+                $scope.flow.title = ''
+                $scope.key = 0
+                $scope.refreshSaved()
+            } else {
+                $('#unsavedModal').modal('open')
+            }
         }
-        $scope.forceNewFlow = function () {
-          $scope.isSaved = true
-          $scope.newFlow()
-          $('#unsavedModal').modal('close')
-          $scope.refreshSaved()
+        $scope.forceNewFlow = function() {
+            $scope.isSaved = true
+            $scope.newFlow()
+            $('#unsavedModal').modal('close')
+            $scope.refreshSaved()
         }
         $scope.lsManagerOpen = function() {
             if (indexedDB) {
@@ -146,49 +166,50 @@ var flowApp = angular.module('flow', [])
                 Materialize.toast('Needs indexedDB', 4000) // 4000 is the duration of the toast
             }
         }
-        $scope.info = function () {
-          $('#infoModal').modal('open')
+        $scope.info = function() {
+            $('#infoModal').modal('open')
         }
-        $scope.emitExpand = function () {
-          $scope.$broadcast('toggleExpand', null)
+        $scope.emitExpand = function() {
+            $scope.$broadcast('toggleExpand', null)
         }
+
         function makeTextFile(text) {
-          var data = new Blob([text], {
-            type: 'octet/stream'
-          })
-          return window.URL.createObjectURL(data)
+            var data = new Blob([text], {
+                type: 'octet/stream'
+            })
+            return window.URL.createObjectURL(data)
         }
     }])
     .controller('lsManager', ['$scope', function($scope) {
         $scope.$on('loadFlows', function(events, args) {
-          $scope.flowTable = []
-          var request = db.transaction(["flows"]).objectStore("flows").getAll()
-          request.onerror = function(event) {
-            //TODO: be sad
-          }
-          request.onsuccess = function(event) {
-            for (var i = 0; i < event.target.result.length; i++) {
-              var f = event.target.result[i]
-              if (f) $scope.flowTable.push({
-                  name: f.title,
-                  teamL: f.leftTeam,
-                  teamR: f.rightTeam
-                })
+            $scope.flowTable = []
+            var request = db.transaction(["flows"]).objectStore("flows").getAll()
+            request.onerror = function(event) {
+                //TODO: be sad
             }
-            if ($scope.flowTable.length === 0) {
-              $scope.message = "No flows exist in local storage."
-              $scope.$apply()
-            } else {
-              var requestKeys = db.transaction(["flows"]).objectStore("flows").getAllKeys()
-              requestKeys.onsuccess = function(event) { //indexeddb getall does not return keys with the objects, have to add keys to the entry after
+            request.onsuccess = function(event) {
                 for (var i = 0; i < event.target.result.length; i++) {
-                  var f = event.target.result[i]
-                  $scope.flowTable[i].id = f
+                    var f = event.target.result[i]
+                    if (f) $scope.flowTable.push({
+                        name: f.title,
+                        teamL: f.leftTeam,
+                        teamR: f.rightTeam
+                    })
                 }
-                $scope.$apply()
-              }
+                if ($scope.flowTable.length === 0) {
+                    $scope.message = "No flows exist in local storage."
+                    $scope.$apply()
+                } else {
+                    var requestKeys = db.transaction(["flows"]).objectStore("flows").getAllKeys()
+                    requestKeys.onsuccess = function(event) { //indexeddb getall does not return keys with the objects, have to add keys to the entry after
+                        for (var i = 0; i < event.target.result.length; i++) {
+                            var f = event.target.result[i]
+                            $scope.flowTable[i].id = f
+                        }
+                        $scope.$apply()
+                    }
+                }
             }
-          }
         })
         $('.dropdown-button').dropdown({
             inDuration: 300,
@@ -207,18 +228,18 @@ var flowApp = angular.module('flow', [])
             $('#delConfirmation').modal('open')
         }
         $scope.completeDelete = function() {
-          var request = db.transaction(["flows"], "readwrite").objectStore("flows").delete($scope.deleting)
-          request.onerror = function(event) {
-            //TODO: be sad
-          }
-          request.onsuccess = function(event) {
-            $scope.$broadcast('loadFlows', null)
-          }
+            var request = db.transaction(["flows"], "readwrite").objectStore("flows").delete($scope.deleting)
+            request.onerror = function(event) {
+                //TODO: be sad
+            }
+            request.onsuccess = function(event) {
+                $scope.$broadcast('loadFlows', null)
+            }
         }
     }])
     .controller('infoModal', ['$scope', function($scope) {
-      $scope.serviceWorker = 'serviceWorker' in navigator ? true : false
-      $scope.indexedDB = indexedDB ? true : false
+        $scope.serviceWorker = 'serviceWorker' in navigator ? true : false
+        $scope.indexedDB = indexedDB ? true : false
     }])
     .config([
         '$compileProvider',
@@ -281,34 +302,34 @@ var flowApp = angular.module('flow', [])
                 removeArgument: '&argrm'
             },
             controller: function() {
-              $('.tooltipped').tooltip()
-              this.extend = function() {
-                  this.boxes.push({
-                      "type": "extension",
-                      "text": ""
-                  })
-              }
-              this.respond = function() {
-                  this.boxes.push({
-                      "type": "response",
-                      "text": ""
-                  })
-              }
-              this.arrow = function() {
-                  this.boxes.push({
-                      "type": "arrow"
-                  })
-              }
-              this.removeBox = function(index) {
-                  this.boxes.splice(index, 1)
-              }
-              this.rmarg = function() {
-                  $('.tooltipped').tooltip('remove') //closes then reinitializes all the tooltips
-                  $('.tooltipped').tooltip()
-                  this.removeArgument({
-                      index: this.index
-                  })
-              }
+                $('.tooltipped').tooltip()
+                this.extend = function() {
+                    this.boxes.push({
+                        "type": "extension",
+                        "text": ""
+                    })
+                }
+                this.respond = function() {
+                    this.boxes.push({
+                        "type": "response",
+                        "text": ""
+                    })
+                }
+                this.arrow = function() {
+                    this.boxes.push({
+                        "type": "arrow"
+                    })
+                }
+                this.removeBox = function(index) {
+                    this.boxes.splice(index, 1)
+                }
+                this.rmarg = function() {
+                    $('.tooltipped').tooltip('remove') //closes then reinitializes all the tooltips
+                    $('.tooltipped').tooltip()
+                    this.removeArgument({
+                        index: this.index
+                    })
+                }
             },
             controllerAs: 'a',
             bindToController: true,
@@ -325,24 +346,24 @@ var flowApp = angular.module('flow', [])
                 removeContention: '&contrm'
             },
             controller: function() {
-              $('.tooltipped').tooltip()
-              this.newArg = function() {
-                this.args.push([{
-                    "title": "",
-                    "text": "",
-                    "type": "constructive"
-                }])
-              }
-              this.removeArgument = function(index) { //removing arguement from contention
-                this.args.splice(index, 1)
-              }
-              this.rmcont = function() { //remove contention called from the contention
-                $('.tooltipped').tooltip('remove')
                 $('.tooltipped').tooltip()
-                this.removeContention({
-                    index: this.index
-                })
-              }
+                this.newArg = function() {
+                    this.args.push([{
+                        "title": "",
+                        "text": "",
+                        "type": "constructive"
+                    }])
+                }
+                this.removeArgument = function(index) { //removing arguement from contention
+                    this.args.splice(index, 1)
+                }
+                this.rmcont = function() { //remove contention called from the contention
+                    $('.tooltipped').tooltip('remove')
+                    $('.tooltipped').tooltip()
+                    this.removeContention({
+                        index: this.index
+                    })
+                }
             },
             controllerAs: 'c',
             bindToController: true,
@@ -360,26 +381,26 @@ var flowApp = angular.module('flow', [])
             controller: function() {
                 this.expand = false
                 this.toggleExpand = function() {
-                  this.expand = !this.expand
+                    this.expand = !this.expand
                 }
                 this.isExpanded = function() {
-                  if (this.expand) return 'flowExpanded flow'
-                  else return 'flow'
+                    if (this.expand) return 'flowExpanded flow'
+                    else return 'flow'
                 }
                 this.newContention = function() {
-                  this.data.push({
-                      "title": "",
-                      "args": []
-                  })
+                    this.data.push({
+                        "title": "",
+                        "args": []
+                    })
                 }
                 this.removeContention = function(index) {
-                  this.data.splice(index, 1)
+                    this.data.splice(index, 1)
                 }
             },
             link: function(scope, element, attr, ctrl) {
-              scope.$on('toggleExpand', function(events, args) {
-                ctrl.toggleExpand()
-              })
+                scope.$on('toggleExpand', function(events, args) {
+                    ctrl.toggleExpand()
+                })
             },
             controllerAs: 'f',
             bindToController: true,
