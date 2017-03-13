@@ -1,5 +1,5 @@
 var staticCacheName = 'flowCache';
-var version = '0.8.4::';
+var version = '0.8.5::';
 
 self.addEventListener('install', function(event) {
   event.waitUntil(updateStaticCache())
