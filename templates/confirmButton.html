@@ -1,0 +1,5 @@
+<span ng-mouseenter="c.enter()" ng-mouseleave="c.leave()">
+  <a class="confirmbutton__icon" ng-click=""><i class="material-icons">{{c.icon}}</i></a>
+  <span class="confirmbutton__circle" ng-class="{'confirmbutton__circle-expanding' : c.active}"></span>
+  <span class="confirmbutton__outline" ng-class="{'confirmbutton__outline-show' : c.active}"></span>
+</span>

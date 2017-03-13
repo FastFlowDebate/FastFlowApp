@@ -328,6 +328,17 @@ td textarea.materialize-textarea {
   width: 100px;
 }
 
+td .btn-flat {
+  padding: 0.2em;
+}
+
+.drop-box {
+  margin-left: 1em;
+  margin-top: 1em;
+  padding: 2em;
+  width: 20em;
+}
+
 /*
 //==============================================================================
 //infoModal//
@@ -338,4 +349,68 @@ td textarea.materialize-textarea {
 }
 .browser-support__entry > i {
   vertical-align: middle;
+}
+
+/*
+//==============================================================================
+//infoModal//
+//==============================================================================
+*/
+
+confirmButton {
+  color: #424242;
+  opacity: 0.3;
+  user-select: none;
+
+}
+
+.confirmbutton__outline {
+  position: absolute;
+  z-index: 4;
+  display: none;
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  border-width: 1px;
+  border-color: #424242;
+  border-style: solid;
+}
+
+.confirmbutton__icon {
+  z-index: 5;
+  color: #424242;
+  position: absolute;
+}
+
+.confirmbutton__outline-show {
+  display: block;
+}
+
+.confirmbutton__circle {
+  opacity: 0;
+  position: relative;
+  display: block;
+  z-index: 3;
+  background-color: #d8d8d8;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: 0em;
+  left: 50%;
+  margin-left: 0em;
+  height: 0em;
+  width: 0em;
+  transition: width 2s, height 2s, margin-top 2s, margin-left 2s;
+  transition-timing-function: ease-in;
+}
+
+.confirmbutton__circle-expanding {
+  opacity: 1;
+  height: 2em;
+  width: 2em;
+  margin-top: 2em;
+  margin-left: 2em;
+}
+
+confirmButton:hover {
+  opacity: 1;
 }

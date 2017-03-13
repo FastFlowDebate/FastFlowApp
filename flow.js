@@ -40,7 +40,8 @@ if (indexedDB && 'serviceWorker' in navigator) {
 }
 
 var angular = require('angular')
-var flowApp = angular.module('flow', [])
+require('ng-file-upload')
+var flowApp = angular.module('flow', ['ngFileUpload'])
     .controller('flowCtrl', ['$scope', function($scope) {
         $('#lsManagerModal').modal()
         $('#infoModal').modal()
@@ -53,7 +54,7 @@ var flowApp = angular.module('flow', [])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.3'
+        $scope.version = '0.8.4'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -64,11 +65,11 @@ var flowApp = angular.module('flow', [])
         xhr.onload = function(e) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                  var newVer = JSON.parse(xhr.responseText).version
-                  console.log(newVer + ' ' + $scope.version)
-                  if(newVer !== $scope.version) $scope.version += ' |-> ' + newVer
+                    var newVer = JSON.parse(xhr.responseText).version
+                    console.log(newVer + ' ' + $scope.version)
+                    if (newVer !== $scope.version) $scope.version += ' |-> ' + newVer
                 } else {
-                  console.error(xhr.statusText)
+                    console.error(xhr.statusText)
                 }
             }
         }
@@ -183,35 +184,38 @@ var flowApp = angular.module('flow', [])
     }])
     .controller('lsManager', ['$scope', function($scope) {
         $scope.$on('loadFlows', function(events, args) {
-            $scope.flowTable = []
-            var request = db.transaction(["flows"]).objectStore("flows").getAll()
-            request.onerror = function(event) {
-                //TODO: be sad
-            }
-            request.onsuccess = function(event) {
-                for (var i = 0; i < event.target.result.length; i++) {
-                    var f = event.target.result[i]
-                    if (f) $scope.flowTable.push({
-                        name: f.title,
-                        teamL: f.leftTeam,
-                        teamR: f.rightTeam
-                    })
-                }
-                if ($scope.flowTable.length === 0) {
-                    $scope.message = "No flows exist in local storage."
-                    $scope.$apply()
-                } else {
-                    var requestKeys = db.transaction(["flows"]).objectStore("flows").getAllKeys()
-                    requestKeys.onsuccess = function(event) { //indexeddb getall does not return keys with the objects, have to add keys to the entry after
-                        for (var i = 0; i < event.target.result.length; i++) {
-                            var f = event.target.result[i]
-                            $scope.flowTable[i].id = f
-                        }
-                        $scope.$apply()
-                    }
-                }
-            }
+          $scope.loadFlows()
         })
+        $scope.loadFlows = function () {
+          var request = db.transaction(["flows"]).objectStore("flows").getAll()
+          request.onerror = function(event) {
+              //TODO: be sad
+          }
+          request.onsuccess = function(event) {
+              $scope.flowTable = []
+              for (var i = 0; i < event.target.result.length; i++) {
+                  var f = event.target.result[i]
+                  if (f) $scope.flowTable.push({
+                      name: f.title,
+                      teamL: f.leftTeam,
+                      teamR: f.rightTeam
+                  })
+              }
+              if ($scope.flowTable.length === 0) {
+                  $scope.message = "No flows exist in local storage."
+                  $scope.$apply()
+              } else {
+                  var requestKeys = db.transaction(["flows"]).objectStore("flows").getAllKeys()
+                  requestKeys.onsuccess = function(event) { //indexeddb getall does not return keys with the objects, have to add keys to the entry after
+                      for (var i = 0; i < event.target.result.length; i++) {
+                          var f = event.target.result[i]
+                          $scope.flowTable[i].id = f
+                      }
+                      $scope.$apply()
+                  }
+              }
+          }
+        }
         $('.dropdown-button').dropdown({
             inDuration: 300,
             outDuration: 225,
@@ -237,15 +241,77 @@ var flowApp = angular.module('flow', [])
                 $scope.$broadcast('loadFlows', null)
             }
         }
+        $scope.download = function(id) {
+            var transaction = db.transaction(["flows"], "readwrite")
+            transaction.onerror = function(event) {
+                alert('Error, opening flow failed!') // 4000 is the duration of the toast
+            }
+            var objectStore = transaction.objectStore("flows")
+            var request = objectStore.get(id)
+            request.onsuccess = function(event) {
+                var href = makeTextFile(JSON.stringify({
+                    flows: [event.target.result]
+                }))
+                var link = document.createElement('a')
+                link.href = href
+                link.download = "flow.json"
+                link.style = "display: none;"
+                document.body.appendChild(link)
+                link.click()
+                link.remove()
+            }
+        }
+
+        function makeTextFile(text) {
+            var data = new Blob([text], {
+                type: 'octet/stream'
+            })
+            return window.URL.createObjectURL(data)
+        }
+        $scope.uploadFiles = function(files) {
+          if (FileReader) {
+            if (files && files.length) {
+              console.log(files.length + ' files')
+              console.log(files)
+              for (i in files) {
+                (function(file) {
+                  var reader = new FileReader()
+                  reader.onload = function(e) {
+                      var file = JSON.parse(e.target.result)
+                      var transaction = db.transaction(["flows"], "readwrite")
+                      transaction.oncomplete = function(event) {
+                          Materialize.toast('Uploaded', 2000) // 4000 is the duration of the toast
+                          $scope.loadFlows()
+                      }
+                      transaction.onerror = function(event) {
+                          alert('Error, not saved!', 4000) // 4000 is the duration of the toast
+                      }
+                      for (j in file.flows) {
+                        (function(flow) {
+                          transaction.objectStore("flows").add(flow).onsuccess = function(event) {
+                            console.log('flow loaded')
+                          }
+                        })(file.flows[j])
+                      }
+                  }
+                  reader.readAsText(file, "UTF-8");
+                })(files[i])
+              }
+            }
+          } else {
+            alert('Uploading requires a browser with File Reader')
+          }
+        }
     }])
     .controller('infoModal', ['$scope', function($scope) {
         $scope.serviceWorker = 'serviceWorker' in navigator ? true : false
         $scope.indexedDB = indexedDB ? true : false
+        $scope.fileReader = FileReader ? true : false
     }])
     .config([
         '$compileProvider',
         function($compileProvider) {
-            $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|file|blob|mailto|chrome-extension):/);
+            $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|file|blob):/)
         }
     ])
     .directive('box', function() {
@@ -406,5 +472,35 @@ var flowApp = angular.module('flow', [])
             controllerAs: 'f',
             bindToController: true,
             templateUrl: 'templates/flow.html'
+        }
+    })
+    .directive('confirmbutton', function() {
+        return {
+            //This is heavily WIP
+            restrict: 'E',
+            scope: {
+                callback: '&',
+                icon: '@',
+                duration: '@'
+            },
+            controller: function() {
+                this.active = false
+
+                this.enter = function() {
+                    this.active = true
+                    console.log('mouse enter')
+
+                }
+                this.leave = function() {
+                    this.active = false
+
+                }
+            },
+            link: function(scope, element, attr, ctrl) {
+
+            },
+            controllerAs: 'c',
+            bindToController: true,
+            templateUrl: 'templates/confirmButton.html'
         }
     })

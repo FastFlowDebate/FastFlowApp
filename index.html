@@ -14,7 +14,7 @@
 <script src="build/bundle.js"></script>
 <div class="version__indicator">{{version}}</div>
 
-<body>
+<body ondrop="return false;">
 	<nav>
 		<div class="nav-wrapper purple">
 			<a href="#" class="brand-logo"><img id="navImg" src="app.png"></a>
@@ -49,7 +49,9 @@
 	</footer>
 </body>
 <div ng-controller="lsManager">
-	<div id="lsManagerModal" class="modal">
+	<div id="lsManagerModal" ngf-drop="uploadFiles($files)" class="card modal"
+		ngf-drag-over-class="'dragover'" ngf-multiple="true"
+		ngf-pattern="'.json'">
 		<div class="modal-content">
 			<h4>Manage Saved Flows</h4> {{message}}
 			<table class="highlight">
@@ -67,12 +69,15 @@
 						<td>{{f.teamR}}</td>
 						<td><a ng-click="open(f.id)" class="waves-effect waves-green btn-flat"><i class="material-icons">send</i></a></td>
 						<td><a ng-click="beginDelete(f.id)" class="waves-effect waves-red btn-flat"><i class="material-icons">close</i></a></td>
+						<td><a ng-click="download(f.id)" class="waves-effect waves-blue btn-flat"><i class="material-icons">file_download</i></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<div class="purple drop-box"><i class="material-icons left">file_upload</i> Drop Flows here to <b>Upload</b></div>
+		<div ngf-no-file-drop>Uploading flows is not supported in this browser</div>
 		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
 		</div>
 	</div>
 	<div id="delConfirmation" class="modal">
@@ -109,13 +114,19 @@
 				<div class="browser-support__entry">
 					Save Flows: <i ng-show="{{indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{indexedDB}}" class="material-icons">close</i>
 				</div>
+				<div class="browser-support__entry">
+					Upload Flows: <i ng-show="{{fileReader}}" class="material-icons md-30">check</i><i ng-hide="{{fileReader}}" class="material-icons">close</i>
+				</div>
 			</div>
 			<hr>
 			<h4>Offline:</h4>
 			Access the offline app by opening the web page once and refreshing it. After that, you can close the tab, turn off your internet, and navigate back to the page and it should load. Magic! Saved flows are also accessible offline as they are saved to your browser.
 			<hr>
 			<h4>Feedback:</h4>
-			Please make any bug reports as issues on the <a href="https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues">Github</a>. Private messaging me on Reddit at u/Zarkoix also works.
+			Please make any bug reports as issues on the <a href="https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues">Github</a>. Private messaging u/Zarkoix on Reddit also works.
+			<hr>
+			<h4>Upload/Download:</h4>
+			You can download flows from the app as lightweight json documents. Flows can be uploaded into the app by dragging them onto the box in the Flow Manager modal.
 		</div>
 		<div class="modal-footer">
 		</div>

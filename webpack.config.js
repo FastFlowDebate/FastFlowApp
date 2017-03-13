@@ -19,10 +19,10 @@ module.exports = {
         }
     },
     plugins: [
-        new webpackUglifyJsPlugin({
+        /*new webpackUglifyJsPlugin({
             cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
             debug: true,
-            minimize: true,
+            minimize: false,
             sourceMap: false,
             output: {
                 comments: false
@@ -30,7 +30,7 @@ module.exports = {
             compressor: {
                 warnings: false
             }
-        }),
+        }),*/
         new webpack.ProvidePlugin({
             $: "jquery",
             'window.$': "jquery",

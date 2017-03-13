@@ -1,7 +1,7 @@
 {
   "name": "flow.fastflowdebate",
   "beta": true,
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities",
   "main": "index.html",
   "scripts": {
@@ -31,6 +31,7 @@
     "imports-loader": "^0.7.0",
     "jquery": "^3.1.1",
     "materialize-css": "^0.98.0",
+    "ng-file-upload": "^12.2.13",
     "style-loader": "^0.13.1",
     "sw-toolbox": "^3.5.1",
     "url-loader": "^0.5.8",
