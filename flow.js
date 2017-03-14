@@ -26,7 +26,6 @@ if (indexedDB && 'serviceWorker' in navigator) {
             scope: '/'
         }).then(function(registration) {
             // Registration was successful
-            registration.update()
             console.log('ServiceWorker registration successful with scope: ', registration.scope)
         }).catch(function(err) {
             // registration failed :(
@@ -54,7 +53,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.5'
+        $scope.version = '0.8.6'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -322,9 +321,11 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 text: '=',
                 type: '=',
                 index: '=boxindex',
+                pushsibling :'&',
                 removeBox: '&boxrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
+                this.focus = false
                 this.color = function(type, critical) {
                     var style = ''
                     if (type == 'extension') style = 'blue'
@@ -353,6 +354,23 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 this.getStyle = function(type) {
                     return this.color(type, this.isCritical())
                 }
+
+            }],
+            //this code is very /cri/
+            link: function(scope, element, attr, ctrl) {
+              scope.$on('boxDefend', function(events, args) {
+                console.log(scope)
+                if (ctrl.focus) ctrl.pushsibling({type: 'defense'})
+              })
+              scope.$on('boxRespond', function(events, args) {
+                if (ctrl.focus) ctrl.pushsibling({type: 'response'})
+              })
+              scope.$on('boxExtend', function(events, args) {
+                if (ctrl.focus) ctrl.pushsibling({type: 'extension'})
+              })
+              scope.$on('newArugment', function(events, args) {
+                if (ctrl.focus) scope.$parent.$parent.$parent.$parent.c.newArg()
+              })
             },
             controllerAs: 'b',
             bindToController: true,
@@ -368,24 +386,28 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 index: '=argindex',
                 removeArgument: '&argrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
-                this.extend = function() {
-                    this.boxes.push({
-                        "type": "extension",
-                        "text": ""
-                    })
-                }
-                this.respond = function() {
-                    this.boxes.push({
-                        "type": "response",
-                        "text": ""
-                    })
-                }
-                this.arrow = function() {
-                    this.boxes.push({
-                        "type": "arrow"
-                    })
+                this.add = function (which) {
+                  switch (which) {
+                    case 'defense' :
+                      this.boxes.push({
+                          "type": "extension",
+                          "text": ""
+                      })
+                      break;
+                    case 'response' :
+                      this.boxes.push({
+                          "type": "response",
+                          "text": ""
+                      })
+                      break;
+                    case 'extension' :
+                      this.boxes.push({
+                          "type": "arrow"
+                      })
+                      break;
+                  }
                 }
                 this.removeBox = function(index) {
                     this.boxes.splice(index, 1)
@@ -397,6 +419,8 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                         index: this.index
                     })
                 }
+            }],
+            link: function(scope, element, attr, ctrl) {
             },
             controllerAs: 'a',
             bindToController: true,
@@ -412,8 +436,9 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 index: '=contindex',
                 removeContention: '&contrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
+                this.focus = false
                 this.newArg = function() {
                     this.args.push([{
                         "title": "",
@@ -431,6 +456,11 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                         index: this.index
                     })
                 }
+            }],
+            link: function(scope, element, attr, ctrl) {
+              scope.$on('newArugment', function(events, args) {
+                    if (ctrl.focus) ctrl.newArg()//not really a way to link in here as no focus
+              })
             },
             controllerAs: 'c',
             bindToController: true,
@@ -445,7 +475,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 id: '@',
                 team: '='
             },
-            controller: function() {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 this.expand = false
                 this.toggleExpand = function() {
                     this.expand = !this.expand
@@ -463,7 +493,50 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 this.removeContention = function(index) {
                     this.data.splice(index, 1)
                 }
-            },
+                this.altDown = false
+                var isCoolDown = false
+                this.keydown = function (keyID) {
+                  if(!isCoolDown){
+                    // sets altDown to true if the shift key (key code is 16) is pressed
+                    keyCode = keyID.keyCode
+                    if(keyCode === 18) {
+                        this.altDown = true
+                    }
+                    // sends the message if "enter" is pressed and "alt" is being held down
+                    if(keyCode === 49 && this.altDown) {
+                      //new contention
+                        event.preventDefault()
+                        this.newContention()
+                    } else if(keyCode === 50 && this.altDown) {
+                      //new arguement
+                        event.preventDefault()
+                        $scope.$broadcast('newArugment')
+                    } else if(keyCode === 51 && this.altDown) {
+                      //defend
+                        event.preventDefault()
+                        $scope.$broadcast('boxDefend')
+                    } else if(keyCode === 52 && this.altDown) {
+                      //respond
+                        event.preventDefault()
+                        $scope.$broadcast('boxRespond')
+                    } else if(keyCode === 53 && this.altDown) {
+                      //extend
+                        event.preventDefault()
+                        $scope.$broadcast('boxExtend')
+                    }
+                    isCooldown = true
+                    $timeout(function () {
+                      isCooldown = false
+                    }, 300);
+                  }
+                }
+                // sets altDown to false if the alt key has been released
+                this.keyup = function (keyID) {
+                    if(keyID.keyCode === 18) {
+                        this.altDown = false
+                    }
+                }
+            }],
             link: function(scope, element, attr, ctrl) {
                 scope.$on('toggleExpand', function(events, args) {
                     ctrl.toggleExpand()

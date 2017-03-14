@@ -1,6 +1,6 @@
 <div class="card left">
   <div class="input-field">
-      <input type="text" ng-model="c.name" placeholder="Contention">
+      <input type="text" ng-focus="c.focus = true" ng-blur="c.focus = false" ng-model="c.name" placeholder="Contention">
       <a ng-click="c.rmcont()" data-position="left" data-delay="50" data-tooltip="Delete Contention" class="tooltipped contention__close"><i class="material-icons">close</i></a>
   </div>
   <table>

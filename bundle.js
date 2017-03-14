@@ -36340,7 +36340,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "/*\n//==============================================================================\n//GENERAL//\n//==============================================================================\n*/\n\nhtml {\n  height: 100%;\n}\n\nbody {\n  width: 100%;\n  display: flex;\n  min-height: 100%;\n  flex-direction: column;\n  margin: 0;\n}\n\n#navImg {\n  margin-top: 0.1em;\n  display: inline;\n  max-height: 0.8em;\n  font-size: 64px;\n}\n\n.title {\n  margin-left: auto;\n  margin-right: auto;\n  position: absolute;\n}\n\nmain > .input-field {\n  padding-left: 1em;\n}\n\nmain > .input-field > input {\n  border-bottom: none !important;\n  box-shadow: none !important;\n}\n\n.viewPort {\n  margin: 0 2%;\n}\n\nmain {\n  flex: 1 0 auto;\n  width: 100%;\n  min-height: 100%;\n}\n\nmain > .input-field:hover {\n  margin-bottom: 0.5em;\n}\n\n#flowTitle {\n  padding: 0.1em;\n}\n\n#betaChip {\n  margin-left: 0.5em;\n}\n\n.version__indicator {\n  z-index: 10;\n  position: fixed;\n  left: 0.1vw;\n  bottom: 0.1vh;\n  color: white;\n}\n@media only screen and (min-width: 992px) {\n  .brand-logo {\n    margin-left: 1em;\n  }\n  #navImg {\n    margin-top: 0.05em;\n  }\n  #betaChip {\n    margin-left: 8em;\n  }\n}\n\n/*\n//==============================================================================\n//FLOW//\n//==============================================================================\n*/\nflow {\n  height: auto;\n  width: auto;\n}\n\n#flowContainer {\n  margin: 1em 0;\n  display: block;\n  max-width: 100%;\n  width: 100%;\n  overflow-x: hidden;\n  height: auto;\n}\n\n.flow {\n  vertical-align: top;\n  display: inline-block;\n  width: 49%;\n  margin: 0.6em 0.3%;\n  height: auto;\n  transition-duration: 0.6s;\n}\n\n.flow > .input-field {\n  padding-left: 1em;\n  border-radius: 0;\n}\n\n.flow > .input-field > input {\n  border-bottom: none !important;\n  box-shadow: none !important;\n}\n.flowExpanded {\n  width: 99%;\n}\n.md-30 {\n  line-height: 45px;\n  font-size: 30px;\n}\n.saveBtn {\n  right: 50px;\n  top: 0;\n}\n.flowExpandBtn {\n  right: 0;\n  top: 0;\n}\n.titleBtn {\n  height: 100%;\n  width: 45px;\n  position: absolute;\n  color: #424242;\n  opacity: 0.3;\n  cursor: pointer;\n  z-index: 2;\n}\n.titleBtn:hover {\n  opacity: 1;\n}\n\n/*\n//==============================================================================\n//CONTENTION//\n//==============================================================================\n*/\ncontention {\n  display: block;\n  overflow: scroll;\n  width: auto;\n  margin-left: 0.5em;\n}\n\ncontention table {\n  padding-top: 0.5em;\n  width: auto;\n}\n\ncontention > .card {\n  margin-bottom: none;\n  margin-top: none;\n  width: auto;\n}\n\ncontention td {\n  min-width: 10em;\n  padding: 0.2em 0.3rem;\n  min-height: 3rem;\n  vertical-align: top;\n}\n\ncontention tr {\n\n}\n\ncontention > table {\n  margin-top: 0.5em;\n}\n\ncontention .input-field {\n  padding-left: 1em;\n}\n\n.contention__close {\n  position: absolute;\n  top: 0.25em;\n  right: 0.25em;\n  color: #424242;\n  opacity: 0.3;\n  cursor: pointer;\n}\n.contention__close:hover {\n  opacity: 1.0;\n  transition-duration: 0.3s;\n}\n\n/*\n//==============================================================================\n//ARGUEMENT//\n//==============================================================================\n*/\n\n#addArg {\n  display: block;\n  margin-bottom: 2em;\n}\n\narguement {\n  width: auto;\n  overflow-y: visible;\n}\n\ncontention:hover .boxBtn {\n  opacity: 0.5\n}\n\n#boxAction {\n  display: flex;\n  flex-direction: column;\n}\n\n.arrow {\n  height: 5rem;\n}\n\n.input-field, input, .constructiveTitle {\n  margin: 0 0 0 0!important;\n  padding-bottom: 0;\n}\n\ntextarea {\n  margin-bottom: 0 !important;\n}\n\n.boxBtn {\n  opacity: 0.2;\n  margin-bottom: 0.2em;\n  width: 30px;\n  height: 30px;\n}\n\n.boxBtn:hover {\n  opacity: 1 !important;\n}\n\n.boxBtn > i {\n  line-height: 30px;\n\n}\n\n/*\n//==============================================================================\n//BOX//\n//==============================================================================\n*/\n.box {\n\n}\ndiv.input-field.constructiveTitle {\n  padding-left: 0;\n}\n\ntd textarea.materialize-textarea {\n  margin-top: 0;\n  padding-top: 0;\n}\n\n.boxClose {\n  right: 0;\n  top: 0;\n  color: #D8D8D8;\n  opacity: 0.2;\n}\n\n.boxClose:hover {\n  color: #424242;\n  opacity: 1;\n}\n\n.boxCriticalBtn {\n  max-width: 1em;\n  margin-top: -6px;\n  left: 0;\n  top: 0;\n  color: #D8D8D8;\n  opacity: 0.2;\n  width: 1em;\n}\n\n.boxCriticalBtn > i {\n  max-width: 1em;\n  display: inline;\n  line-height: 2.2rem;\n  font-size: 1.5rem;\n}\n\n.boxCriticalBtn:hover {\n  color: #424242;\n  opacity: 1;\n  cursor: pointer;\n}\n\n.boxCriticalBorder {\n  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);\n}\n\n.boxCriticalBorder > .boxCriticalBtn {\n  color: #424242;\n  opacity: 0.8;\n}\n\n/*\n//==============================================================================\n//lsManager//\n//==============================================================================\n*/\n\n#lsManagerModal > .modal-content > table {\n  width: 70%;\n}\n\n#lsManagerModal > .modal-content > td {\n  width: 100px;\n}\n\ntd .btn-flat {\n  padding: 0.2em;\n}\n\n.drop-box {\n  margin-left: 1em;\n  margin-top: 1em;\n  padding: 2em;\n  width: 20em;\n}\n\n/*\n//==============================================================================\n//infoModal//\n//==============================================================================\n*/\n.browser-support__entry {\n  line-height: 2em;\n}\n.browser-support__entry > i {\n  vertical-align: middle;\n}\n\n/*\n//==============================================================================\n//infoModal//\n//==============================================================================\n*/\n\nconfirmButton {\n  color: #424242;\n  opacity: 0.3;\n  user-select: none;\n\n}\n\n.confirmbutton__outline {\n  position: absolute;\n  z-index: 4;\n  display: none;\n  height: 2em;\n  width: 2em;\n  border-radius: 50%;\n  border-width: 1px;\n  border-color: #424242;\n  border-style: solid;\n}\n\n.confirmbutton__icon {\n  z-index: 5;\n  color: #424242;\n  position: absolute;\n}\n\n.confirmbutton__outline-show {\n  display: block;\n}\n\n.confirmbutton__circle {\n  opacity: 0;\n  position: relative;\n  display: block;\n  z-index: 3;\n  background-color: #d8d8d8;\n  border-radius: 50%;\n  top: 50%;\n  margin-top: 0em;\n  left: 50%;\n  margin-left: 0em;\n  height: 0em;\n  width: 0em;\n  transition: width 2s, height 2s, margin-top 2s, margin-left 2s;\n  transition-timing-function: ease-in;\n}\n\n.confirmbutton__circle-expanding {\n  opacity: 1;\n  height: 2em;\n  width: 2em;\n  margin-top: 2em;\n  margin-left: 2em;\n}\n\nconfirmButton:hover {\n  opacity: 1;\n}\n", ""]);
+exports.push([module.i, "/*\n//==============================================================================\n//GENERAL//\n//==============================================================================\n*/\n\nhtml {\n  height: 100%;\n}\n\nbody {\n  width: 100%;\n  display: flex;\n  min-height: 100%;\n  flex-direction: column;\n  margin: 0;\n}\n\n#navImg {\n  margin-top: 0.1em;\n  display: inline;\n  max-height: 0.8em;\n  font-size: 64px;\n}\n\n.title {\n  margin-left: auto;\n  margin-right: auto;\n  position: absolute;\n}\n\nmain > .input-field {\n  padding-left: 1em;\n}\n\nmain > .input-field > input {\n  border-bottom: none !important;\n  box-shadow: none !important;\n}\n\n.viewPort {\n  margin: 0 2%;\n}\n\nmain {\n  flex: 1 0 auto;\n  width: 100%;\n  min-height: 100%;\n}\n\nmain > .input-field:hover {\n  margin-bottom: 0.5em;\n}\n\n#flowTitle {\n  padding: 0.1em;\n}\n\n#betaChip {\n  margin-left: 0.5em;\n}\n\n.version__indicator {\n  z-index: 10;\n  position: fixed;\n  left: 0.1vw;\n  bottom: 0.1vh;\n  color: white;\n}\n@media only screen and (min-width: 992px) {\n  .brand-logo {\n    margin-left: 1em;\n  }\n  #navImg {\n    margin-top: 0.05em;\n  }\n  #betaChip {\n    margin-left: 8em;\n  }\n}\n\n/*\n//==============================================================================\n//FLOW//\n//==============================================================================\n*/\nflow {\n  height: auto;\n  width: auto;\n}\n\n#flowContainer {\n  margin: 1em 0;\n  display: block;\n  max-width: 100%;\n  width: 100%;\n  overflow-x: hidden;\n  height: auto;\n}\n\n.flow {\n  vertical-align: top;\n  display: inline-block;\n  width: 49%;\n  margin: 0.6em 0.3%;\n  height: auto;\n  transition-duration: 0.6s;\n}\n\n.flow__addContention {\n  width: 100%;\n}\n\n.flow > .input-field {\n  padding-left: 1em;\n  border-radius: 0;\n}\n\n.flow > .input-field > input {\n  border-bottom: none !important;\n  box-shadow: none !important;\n}\n.flowExpanded {\n  width: 99%;\n}\n.md-30 {\n  line-height: 45px;\n  font-size: 30px;\n}\n.saveBtn {\n  right: 50px;\n  top: 0;\n}\n.flowExpandBtn {\n  right: 0;\n  top: 0;\n}\n.titleBtn {\n  height: 100%;\n  width: 45px;\n  position: absolute;\n  color: #424242;\n  opacity: 0.3;\n  cursor: pointer;\n  z-index: 2;\n}\n.titleBtn:hover {\n  opacity: 1;\n}\n\n/*\n//==============================================================================\n//CONTENTION//\n//==============================================================================\n*/\ncontention {\n  display: block;\n  overflow: scroll;\n  width: auto;\n  margin-left: 0.5em;\n}\n\ncontention table {\n  padding-top: 0.5em;\n  width: auto;\n}\n\ncontention > .card {\n  margin-bottom: none;\n  margin-top: none;\n  width: auto;\n}\n\ncontention td {\n  min-width: 10em;\n  padding: 0.2em 0.3rem;\n  min-height: 3rem;\n  vertical-align: top;\n}\n\ncontention tr {\n\n}\n\ncontention > table {\n  margin-top: 0.5em;\n}\n\ncontention .input-field {\n  padding-left: 1em;\n}\n\n.contention__close {\n  position: absolute;\n  top: 0.25em;\n  right: 0.25em;\n  color: #424242;\n  opacity: 0.3;\n  cursor: pointer;\n}\n.contention__close:hover {\n  opacity: 1.0;\n  transition-duration: 0.3s;\n}\n\n/*\n//==============================================================================\n//ARGUEMENT//\n//==============================================================================\n*/\n\n#addArg {\n  display: block;\n  margin-bottom: 2em;\n}\n\narguement {\n  width: auto;\n  overflow-y: visible;\n}\n\ncontention:hover .boxBtn {\n  opacity: 0.5\n}\n\n#boxAction {\n  display: flex;\n  flex-direction: column;\n}\n\n.arrow {\n  height: 5rem;\n}\n\n.input-field, input, .constructiveTitle {\n  margin: 0 0 0 0!important;\n  padding-bottom: 0;\n}\n\ntextarea {\n  margin-bottom: 0 !important;\n}\n\n.boxBtn {\n  opacity: 0.2;\n  margin-bottom: 0.2em;\n  width: 30px;\n  height: 30px;\n}\n\n.boxBtn:hover {\n  opacity: 1 !important;\n}\n\n.boxBtn > i {\n  line-height: 30px;\n\n}\n\n/*\n//==============================================================================\n//BOX//\n//==============================================================================\n*/\n.box {\n\n}\ndiv.input-field.constructiveTitle {\n  padding-left: 0;\n}\n\ntd textarea.materialize-textarea {\n  margin-top: 0;\n  padding-top: 0;\n}\n\n.boxClose {\n  right: 0;\n  top: 0;\n  color: #D8D8D8;\n  opacity: 0.2;\n}\n\n.boxClose:hover {\n  color: #424242;\n  opacity: 1;\n}\n\n.boxCriticalBtn {\n  max-width: 1em;\n  margin-top: -6px;\n  left: 0;\n  top: 0;\n  color: #D8D8D8;\n  opacity: 0.2;\n  width: 1em;\n}\n\n.boxCriticalBtn > i {\n  max-width: 1em;\n  display: inline;\n  line-height: 2.2rem;\n  font-size: 1.5rem;\n}\n\n.boxCriticalBtn:hover {\n  color: #424242;\n  opacity: 1;\n  cursor: pointer;\n}\n\n.boxCriticalBorder {\n  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);\n}\n\n.boxCriticalBorder > .boxCriticalBtn {\n  color: #424242;\n  opacity: 0.8;\n}\n\n/*\n//==============================================================================\n//lsManager//\n//==============================================================================\n*/\n\n#lsManagerModal > .modal-content > table {\n  width: 70%;\n}\n\n#lsManagerModal > .modal-content > td {\n  width: 100px;\n}\n\ntd .btn-flat {\n  padding: 0.2em;\n}\n\n.drop-box {\n  margin-left: 1em;\n  margin-top: 1em;\n  padding: 2em;\n  width: 20em;\n}\n\n/*\n//==============================================================================\n//infoModal//\n//==============================================================================\n*/\n.browser-support__entry {\n  line-height: 2em;\n}\n.browser-support__entry > i {\n  vertical-align: middle;\n}\n\n/*\n//==============================================================================\n//infoModal//\n//==============================================================================\n*/\n\nconfirmButton {\n  color: #424242;\n  opacity: 0.3;\n  user-select: none;\n\n}\n\n.confirmbutton__outline {\n  position: absolute;\n  z-index: 4;\n  display: none;\n  height: 2em;\n  width: 2em;\n  border-radius: 50%;\n  border-width: 1px;\n  border-color: #424242;\n  border-style: solid;\n}\n\n.confirmbutton__icon {\n  z-index: 5;\n  color: #424242;\n  position: absolute;\n}\n\n.confirmbutton__outline-show {\n  display: block;\n}\n\n.confirmbutton__circle {\n  opacity: 0;\n  position: relative;\n  display: block;\n  z-index: 3;\n  background-color: #d8d8d8;\n  border-radius: 50%;\n  top: 50%;\n  margin-top: 0em;\n  left: 50%;\n  margin-left: 0em;\n  height: 0em;\n  width: 0em;\n  transition: width 2s, height 2s, margin-top 2s, margin-left 2s;\n  transition-timing-function: ease-in;\n}\n\n.confirmbutton__circle-expanding {\n  opacity: 1;\n  height: 2em;\n  width: 2em;\n  margin-top: 2em;\n  margin-left: 2em;\n}\n\nconfirmButton:hover {\n  opacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -39372,7 +39372,6 @@ if (indexedDB && 'serviceWorker' in navigator) {
             scope: '/'
         }).then(function(registration) {
             // Registration was successful
-            registration.update()
             console.log('ServiceWorker registration successful with scope: ', registration.scope)
         }).catch(function(err) {
             // registration failed :(
@@ -39400,7 +39399,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.5'
+        $scope.version = '0.8.6'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -39668,9 +39667,11 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 text: '=',
                 type: '=',
                 index: '=boxindex',
+                pushsibling :'&',
                 removeBox: '&boxrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
+                this.focus = false
                 this.color = function(type, critical) {
                     var style = ''
                     if (type == 'extension') style = 'blue'
@@ -39699,6 +39700,23 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 this.getStyle = function(type) {
                     return this.color(type, this.isCritical())
                 }
+
+            }],
+            //this code is very /cri/
+            link: function(scope, element, attr, ctrl) {
+              scope.$on('boxDefend', function(events, args) {
+                console.log(scope)
+                if (ctrl.focus) ctrl.pushsibling({type: 'defense'})
+              })
+              scope.$on('boxRespond', function(events, args) {
+                if (ctrl.focus) ctrl.pushsibling({type: 'response'})
+              })
+              scope.$on('boxExtend', function(events, args) {
+                if (ctrl.focus) ctrl.pushsibling({type: 'extension'})
+              })
+              scope.$on('newArugment', function(events, args) {
+                if (ctrl.focus) scope.$parent.$parent.$parent.$parent.c.newArg()
+              })
             },
             controllerAs: 'b',
             bindToController: true,
@@ -39714,24 +39732,28 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 index: '=argindex',
                 removeArgument: '&argrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
-                this.extend = function() {
-                    this.boxes.push({
-                        "type": "extension",
-                        "text": ""
-                    })
-                }
-                this.respond = function() {
-                    this.boxes.push({
-                        "type": "response",
-                        "text": ""
-                    })
-                }
-                this.arrow = function() {
-                    this.boxes.push({
-                        "type": "arrow"
-                    })
+                this.add = function (which) {
+                  switch (which) {
+                    case 'defense' :
+                      this.boxes.push({
+                          "type": "extension",
+                          "text": ""
+                      })
+                      break;
+                    case 'response' :
+                      this.boxes.push({
+                          "type": "response",
+                          "text": ""
+                      })
+                      break;
+                    case 'extension' :
+                      this.boxes.push({
+                          "type": "arrow"
+                      })
+                      break;
+                  }
                 }
                 this.removeBox = function(index) {
                     this.boxes.splice(index, 1)
@@ -39743,6 +39765,8 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                         index: this.index
                     })
                 }
+            }],
+            link: function(scope, element, attr, ctrl) {
             },
             controllerAs: 'a',
             bindToController: true,
@@ -39758,8 +39782,9 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 index: '=contindex',
                 removeContention: '&contrm'
             },
-            controller: function() {
+            controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
+                this.focus = false
                 this.newArg = function() {
                     this.args.push([{
                         "title": "",
@@ -39777,6 +39802,11 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                         index: this.index
                     })
                 }
+            }],
+            link: function(scope, element, attr, ctrl) {
+              scope.$on('newArugment', function(events, args) {
+                    if (ctrl.focus) ctrl.newArg()//not really a way to link in here as no focus
+              })
             },
             controllerAs: 'c',
             bindToController: true,
@@ -39791,7 +39821,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 id: '@',
                 team: '='
             },
-            controller: function() {
+            controller: ['$scope', '$timeout', function($scope, $timeout) {
                 this.expand = false
                 this.toggleExpand = function() {
                     this.expand = !this.expand
@@ -39809,7 +39839,50 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 this.removeContention = function(index) {
                     this.data.splice(index, 1)
                 }
-            },
+                this.altDown = false
+                var isCoolDown = false
+                this.keydown = function (keyID) {
+                  if(!isCoolDown){
+                    // sets altDown to true if the shift key (key code is 16) is pressed
+                    keyCode = keyID.keyCode
+                    if(keyCode === 18) {
+                        this.altDown = true
+                    }
+                    // sends the message if "enter" is pressed and "alt" is being held down
+                    if(keyCode === 49 && this.altDown) {
+                      //new contention
+                        event.preventDefault()
+                        this.newContention()
+                    } else if(keyCode === 50 && this.altDown) {
+                      //new arguement
+                        event.preventDefault()
+                        $scope.$broadcast('newArugment')
+                    } else if(keyCode === 51 && this.altDown) {
+                      //defend
+                        event.preventDefault()
+                        $scope.$broadcast('boxDefend')
+                    } else if(keyCode === 52 && this.altDown) {
+                      //respond
+                        event.preventDefault()
+                        $scope.$broadcast('boxRespond')
+                    } else if(keyCode === 53 && this.altDown) {
+                      //extend
+                        event.preventDefault()
+                        $scope.$broadcast('boxExtend')
+                    }
+                    isCooldown = true
+                    $timeout(function () {
+                      isCooldown = false
+                    }, 300);
+                  }
+                }
+                // sets altDown to false if the alt key has been released
+                this.keyup = function (keyID) {
+                    if(keyID.keyCode === 18) {
+                        this.altDown = false
+                    }
+                }
+            }],
             link: function(scope, element, attr, ctrl) {
                 scope.$on('toggleExpand', function(events, args) {
                     ctrl.toggleExpand()

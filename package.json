@@ -1,7 +1,7 @@
 {
   "name": "flow.fastflowdebate",
   "beta": true,
-  "version": "0.8.5",
+  "version": "0.8.6",
   "description": "FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities",
   "main": "index.html",
   "scripts": {
@@ -37,5 +37,8 @@
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1",
     "webpack-uglify-js-plugin": "^1.1.9"
+  },
+  "devDependencies": {
+    "sw-precache-webpack-plugin": "^0.9.1"
   }
 }

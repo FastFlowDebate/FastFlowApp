@@ -1,5 +1,9 @@
 var webpack = require('webpack')
 var webpackUglifyJsPlugin = require('webpack-uglify-js-plugin')
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+var pjson = require('./package.json')
+
+
 
 var path = require('path')
 
@@ -11,7 +15,7 @@ module.exports = {
     entry: './flow.js',
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/build',
+        path: __dirname,
     },
     resolve: {
         alias: {
@@ -19,18 +23,20 @@ module.exports = {
         }
     },
     plugins: [
-        /*new webpackUglifyJsPlugin({
-            cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
-            debug: true,
-            minimize: false,
-            sourceMap: false,
-            output: {
-                comments: false
-            },
-            compressor: {
-                warnings: false
-            }
-        }),*/
+        new SWPrecacheWebpackPlugin({
+          cacheId: 'flow' + pjson.version,
+          filename: 'sw.js',
+          maximumFileSizeToCacheInBytes: 104194304,
+          minify: false,
+          staticFileGlobs: [
+            'templates/**.*',
+            'app.png',
+            'favicon.ico',
+            'index.html',
+            'arrow.svg'
+          ],
+          skipWaiting: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             'window.$': "jquery",
