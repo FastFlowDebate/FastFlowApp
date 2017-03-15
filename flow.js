@@ -53,7 +53,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.8.6'
+        $scope.version = '0.9.0'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -321,11 +321,20 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 text: '=',
                 type: '=',
                 index: '=boxindex',
+                argfocus: '&',
                 pushsibling :'&',
                 removeBox: '&boxrm'
             },
-            controller: ['$scope', function($scope) {
-                this.focus = false
+            controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
+                this.isFocused = false
+                this.focus = function () {
+                  this.isFocused = true //set itself to focused
+                  this.argfocus({focus:true}) //set parent arg to focused
+                }
+                this.blur = function () {
+                  this.isFocused = false //set itself to blurred
+                  this.argfocus({focus:false}) //set parent arg to blurred
+                }
                 this.color = function(type, critical) {
                     var style = ''
                     if (type == 'extension') style = 'blue'
@@ -354,22 +363,30 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 this.getStyle = function(type) {
                     return this.color(type, this.isCritical())
                 }
-
+                $scope.$watch(angular.bind(this, function () { //watch the text and auto-resize when needed
+                  return this.text;
+                }), function (newVal) {
+                  $timeout(function () {
+                    $element.find('.materialize-textarea').trigger("autoresize")
+                  })
+                })
             }],
-            //this code is very /cri/
             link: function(scope, element, attr, ctrl) {
+              //when box is created focus either the tagline if first box or the textare
+              if(ctrl.index == 0) {
+                element.find('.box__constructiveTitle__input').focus()
+              } else {
+                element.find('.box__textarea').focus()
+              }
+
               scope.$on('boxDefend', function(events, args) {
-                console.log(scope)
-                if (ctrl.focus) ctrl.pushsibling({type: 'defense'})
+                if (ctrl.isFocused) ctrl.pushsibling({type: 'defense'})
               })
               scope.$on('boxRespond', function(events, args) {
-                if (ctrl.focus) ctrl.pushsibling({type: 'response'})
+                if (ctrl.isFocused) ctrl.pushsibling({type: 'response'})
               })
               scope.$on('boxExtend', function(events, args) {
-                if (ctrl.focus) ctrl.pushsibling({type: 'extension'})
-              })
-              scope.$on('newArugment', function(events, args) {
-                if (ctrl.focus) scope.$parent.$parent.$parent.$parent.c.newArg()
+                if (ctrl.isFocused) ctrl.pushsibling({type: 'extension'})
               })
             },
             controllerAs: 'b',
@@ -384,7 +401,8 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
             scope: {
                 boxes: '=',
                 index: '=argindex',
-                removeArgument: '&argrm'
+                removeArgument: '&argrm',
+                contfocus: '&'
             },
             controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
@@ -414,13 +432,18 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                 }
                 this.rmarg = function() {
                     $('.tooltipped').tooltip('remove') //closes then reinitializes all the tooltips
-                    $('.tooltipped').tooltip()
                     this.removeArgument({
                         index: this.index
                     })
+                    $('.tooltipped').tooltip()
+                }
+                this.argfocus = function (args) {
+                  this.isFocused = args //set self focus to focus of box
+                  this.contfocus({focus:args}) //update contention to focus of self
                 }
             }],
             link: function(scope, element, attr, ctrl) {
+
             },
             controllerAs: 'a',
             bindToController: true,
@@ -438,7 +461,13 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
             },
             controller: ['$scope', function($scope) {
                 $('.tooltipped').tooltip()
-                this.focus = false
+                this.isFocused = false
+                this.focus = function () {
+                  this.isFocused = true
+                }
+                this.blur = function () {
+                  this.isFocused = false
+                }
                 this.newArg = function() {
                     this.args.push([{
                         "title": "",
@@ -456,10 +485,14 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                         index: this.index
                     })
                 }
+                this.contfocus = function (args) {
+                  this.isFocused = args //set self focus to focus of box
+                }
             }],
             link: function(scope, element, attr, ctrl) {
+              element.find('.contention__input').focus() //focus the input bar when created
               scope.$on('newArugment', function(events, args) {
-                    if (ctrl.focus) ctrl.newArg()//not really a way to link in here as no focus
+                    if (ctrl.isFocused) ctrl.newArg()//not really a way to link in here as no focus
               })
             },
             controllerAs: 'c',
@@ -523,6 +556,9 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
                       //extend
                         event.preventDefault()
                         $scope.$broadcast('boxExtend')
+                    } else if(keyCode === 13) {
+                      event.preventDefault()
+                      $scope.$broadcast('newArugment')
                     }
                     isCooldown = true
                     $timeout(function () {
@@ -561,8 +597,6 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
 
                 this.enter = function() {
                     this.active = true
-                    console.log('mouse enter')
-
                 }
                 this.leave = function() {
                     this.active = false

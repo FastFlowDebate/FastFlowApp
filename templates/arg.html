@@ -1,4 +1,4 @@
-<td box ng-repeat="b in a.boxes track by $index" tag="b.title" text="b.text" type="b.type" boxindex="$index" class="box" pushsibling="a.add(type)"boxrm="a.removeBox($index)"></td>
+<td box ng-repeat="b in a.boxes track by $index" tag="b.title" text="b.text" type="b.type" boxindex="$index" class="box" pushsibling="a.add(type)" argfocus="a.argfocus(focus)" boxrm="a.removeBox($index)"></td>
 <td id="boxAction" class="">
   <div class="btn-floating btn tooltipped waves-effect waves-light blue boxBtn" data-position="right" data-delay="50" data-tooltip="Defend" ng-click="a.add('defense')"><i class="material-icons">security</i></div>
   <div class="btn-floating btn tooltipped waves-effect waves-light red boxBtn" data-position="right" data-delay="50" data-tooltip="Respond" ng-click="a.add('response')"><i class="material-icons">block</i></div>
