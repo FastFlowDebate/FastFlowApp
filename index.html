@@ -12,7 +12,7 @@
 </head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="bundle.js"></script>
-<div class="version__indicator">{{version}}</div>
+<div class="version__indicator">{{::version}}</div>
 
 <body ondrop="return false;">
 	<nav>
@@ -109,13 +109,13 @@
 			<div id="browser-support__modal">
 				<h4>Browser Information:</h4>
 				<div class="browser-support__entry">
-					Offline Support: <i ng-show="{{serviceWorker}}" class="material-icons md-30">check</i><i ng-hide="{{serviceWorker}}" class="material-icons">close</i>
+					Offline Support: <i ng-show="{{::serviceWorker}}" class="material-icons md-30">check</i><i ng-hide="{{::serviceWorker}}" class="material-icons">close</i>
 				</div>
 				<div class="browser-support__entry">
-					Save Flows: <i ng-show="{{indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{indexedDB}}" class="material-icons">close</i>
+					Save Flows: <i ng-show="{{::indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{::indexedDB}}" class="material-icons">close</i>
 				</div>
 				<div class="browser-support__entry">
-					Upload Flows: <i ng-show="{{fileReader}}" class="material-icons md-30">check</i><i ng-hide="{{fileReader}}" class="material-icons">close</i>
+					Upload Flows: <i ng-show="{{::fileReader}}" class="material-icons md-30">check</i><i ng-hide="{{::fileReader}}" class="material-icons">close</i>
 				</div>
 			</div>
 			<hr>
@@ -130,7 +130,8 @@
 			<hr>
 			<h4>Hotkeys:</h4>
 			Alt+1: New Contention<br>
-			Alt+2: New Arguement<br>
+			Alt+2 or Enter: New Argument<br>
+			Shift+Enter: Move Argument to New Contention<br>
 			Alt+3: New Defense (Blue Sticky)<br>
 			Alt+4: New Response (Red Sticky)<br>
 			Alt+5: New Extension (Green Arrow Sticky)

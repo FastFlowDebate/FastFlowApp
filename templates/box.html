@@ -2,10 +2,10 @@
 <td>
   <a ng-click="b.toggleCritical()" ng-show="b.index !== 0" class="left boxCriticalBtn"><i class="material-icons">star_rate</i></a>
   <a ng-click="b.rmbox()" ng-show="b.index !== 0" class="waves-effect waves-red right boxClose"><i class="material-icons">clear</i></a>
-  <div ng-show="b.index == 0" class="input-field constructiveTitle">
-      <input class="box__constructiveTitle__input" type="text" ng-model="b.tag" placeholder="Tagline" ng-focus="b.focus()" ng-blur="b.blur()">
+  <div ng-if="b.index == 0" class="input-field constructiveTitle">
+      <input class="box__constructiveTitle__input" type="text" ng-model="b.tag" placeholder="Tagline" ng-focus="b.setfocus(true)" ng-blur="b.setfocus(false)">
   </div>
-  <textarea ng-show="b.type != 'arrow'" ng-focus="b.focus()" ng-blur="b.blur()" ng-model="b.text" class="materialize-textarea box__textarea"></textarea>
-  <img ng-show="b.type == 'arrow'" class="arrow" src="arrow.svg">
+  <textarea ng-show="b.type != 'arrow'" ng-focus="b.setfocus(true)" ng-blur="b.setfocus(false)" ng-model="b.text" class="materialize-textarea box__textarea"></textarea>
+  <img ng-if="b.type == 'arrow'" class="arrow" src="arrow.svg">
 </td>
 </div>

@@ -23,6 +23,18 @@ module.exports = {
         }
     },
     plugins: [
+        new webpackUglifyJsPlugin({
+          cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
+          debug: true,
+          minimize: true,
+          sourceMap: false,
+          output: {
+            comments: false
+          },
+          compressor: {
+            warnings: false
+          }
+        }),
         new SWPrecacheWebpackPlugin({
           cacheId: 'flow' + pjson.version,
           filename: 'sw.js',
