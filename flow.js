@@ -40,7 +40,8 @@ if (indexedDB && 'serviceWorker' in navigator) {
 
 var angular = require('angular')
 require('ng-file-upload')
-var flowApp = angular.module('flow', ['ngFileUpload'])
+require('angular-animate')
+var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
     .controller('flowCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
         $('#lsManagerModal').modal()
         $('#infoModal').modal()
@@ -53,7 +54,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.9.2'
+        $scope.version = '0.9.3'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 
@@ -634,3 +635,20 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
             templateUrl: 'templates/confirmButton.html'
         }
     })
+    .directive('mAppLoading', ['$animate', function($animate) {
+                    // Return the directive configuration.
+                    return({
+                        link: function (scope, element, attributes) {
+                          console.log('leaviinnnnn')
+                          $animate.leave(element.children().eq(0)).then(
+                              function cleanupAfterAnimation () {
+                                  element.remove()
+                                  scope = element = attributes = null
+                              }
+                          )
+                        },
+                        restrict: "C"
+                    })
+                    // I bind the JavaScript events to the scope.
+
+                }])

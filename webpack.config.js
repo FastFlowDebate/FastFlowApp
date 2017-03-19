@@ -23,7 +23,7 @@ module.exports = {
         }
     },
     plugins: [
-        new webpackUglifyJsPlugin({
+        /*new webpackUglifyJsPlugin({
           cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
           debug: true,
           minimize: true,
@@ -34,19 +34,21 @@ module.exports = {
           compressor: {
             warnings: false
           }
-        }),
+        }),*/
         new SWPrecacheWebpackPlugin({
           cacheId: 'flow' + pjson.version,
           filename: 'sw.js',
           maximumFileSizeToCacheInBytes: 104194304,
           minify: false,
           staticFileGlobs: [
+            'bundle.js',
             'templates/**.*',
             'app.png',
-            'favicon.ico',
             'index.html',
-            'arrow.svg'
+            'arrow.svg',
+            'load.css'
           ],
+          verbose: true,
           skipWaiting: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
         }),
         new webpack.ProvidePlugin({

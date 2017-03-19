@@ -5,223 +5,235 @@
 */
 
 html {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  width: 100%;
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  margin: 0;
+    width: 100%;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    margin: 0;
 }
 
 #navImg {
-  margin-top: 0.1em;
-  display: inline;
-  max-height: 0.8em;
-  font-size: 64px;
+    margin-top: 0.1em;
+    display: inline;
+    max-height: 0.8em;
+    font-size: 64px;
 }
 
 .title {
-  margin-left: auto;
-  margin-right: auto;
-  position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
 }
 
-main > .input-field {
-  padding-left: 1em;
+main>.input-field {
+    padding-left: 1em;
 }
 
-main > .input-field > input {
-  border-bottom: none !important;
-  box-shadow: none !important;
+main>.input-field>input {
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
 
 .viewPort {
-  margin: 0 2%;
+    margin: 0 2%;
 }
 
 main {
-  flex: 1 0 auto;
-  width: 100%;
-  min-height: 100%;
+    flex: 1 0 auto;
+    width: 100%;
+    min-height: 100%;
 }
 
-main > .input-field:hover {
-  margin-bottom: 0.5em;
+main>.input-field:hover {
+    margin-bottom: 0.5em;
 }
 
 #flowTitle {
-  padding: 0.1em;
-  margin-bottom: 0;
+    padding: 0.1em;
+    margin-bottom: 0;
 }
 
 #betaChip {
-  margin-left: 0.5em;
+    margin-left: 0.5em;
 }
 
 .version__indicator {
-  z-index: 10;
-  position: absolute;
-  left: 0.1vw;
-  bottom: 0.1vh;
-  color: white;
+    z-index: 10;
+    position: absolute;
+    left: 0.1vw;
+    bottom: 0.1vh;
+    color: white;
 }
+
 @media only screen and (min-width: 992px) {
-  .brand-logo {
-    margin-left: 1em;
-  }
-  #navImg {
-    margin-top: 0.1em;
-  }
-  #betaChip {
-    margin-left: 8em;
-  }
+    .brand-logo {
+        margin-left: 1em;
+    }
+    #navImg {
+        margin-top: 0.1em;
+    }
+    #betaChip {
+        margin-left: 8em;
+    }
 }
+
 @media only screen and (max-width: 600px) {
-  #navImg {
-    margin-top: 0.03em;
-  }
+    #navImg {
+        margin-top: 0.03em;
+    }
 }
+
 
 /*
 //==============================================================================
 //FLOW//
 //==============================================================================
 */
+
 flow {
-  height: auto;
-  width: auto;
+    height: auto;
+    width: auto;
 }
 
 #flowContainer {
-  margin: 1em 0;
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  height: auto;
+    margin: 1em 0;
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    height: auto;
 }
 
 flow .flow__input {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .flow {
-  vertical-align: top;
-  display: inline-block;
-  width: 49%;
-  margin: 0.6em 0.3%;
-  height: auto;
-  transition-duration: 0.6s;
+    vertical-align: top;
+    display: inline-block;
+    width: 49%;
+    margin: 0.6em 0.3%;
+    height: auto;
+    transition-duration: 0.6s;
 }
 
 .flow__addContention {
-  width: 100%;
+    width: 100%;
 }
 
-.flow > .input-field {
-  padding-left: 1em;
-  border-radius: 0;
+.flow>.input-field {
+    padding-left: 1em;
+    border-radius: 0;
 }
 
-.flow > .input-field > input {
-  border-bottom: none !important;
-  box-shadow: none !important;
+.flow>.input-field>input {
+    border-bottom: none !important;
+    box-shadow: none !important;
 }
+
 .flowExpanded {
-  width: 99%;
+    width: 99%;
 }
+
 .md-30 {
-  line-height: 45px;
-  font-size: 30px;
+    line-height: 45px;
+    font-size: 30px;
 }
+
 .saveBtn {
-  right: 50px;
-  top: 0;
+    right: 50px;
+    top: 0;
 }
+
 .flowExpandBtn {
-  right: 0;
-  top: 0;
+    right: 0;
+    top: 0;
 }
+
 .titleBtn {
-  height: 100%;
-  width: 45px;
-  position: absolute;
-  color: #424242;
-  opacity: 0.3;
-  cursor: pointer;
-  z-index: 2;
+    height: 100%;
+    width: 45px;
+    position: absolute;
+    color: #424242;
+    opacity: 0.3;
+    cursor: pointer;
+    z-index: 2;
 }
+
 .titleBtn:hover {
-  opacity: 1;
+    opacity: 1;
 }
+
 
 /*
 //==============================================================================
 //CONTENTION//
 //==============================================================================
 */
+
 contention {
-  display: block;
-  overflow: scroll;
-  width: auto;
-  margin-left: 0.5em;
+    display: block;
+    overflow: scroll;
+    width: auto;
+    margin-left: 0.5em;
 }
 
 .contention__card {
-  padding: 0.2em;
+    padding: 0.2em;
 }
 
 contention table {
-  padding-top: 0.5em;
-  width: auto;
+    padding-top: 0.5em;
+    width: auto;
 }
 
-contention > .card {
-  margin-bottom: none;
-  margin-top: none;
-  width: auto;
+contention>.card {
+    margin-bottom: none;
+    margin-top: none;
+    width: auto;
 }
 
 contention td {
-  min-width: 10em;
-  padding: 0.2em 0.3rem;
-  min-height: 3rem;
-  vertical-align: top;
+    min-width: 10em;
+    padding: 0.2em 0.3rem;
+    min-height: 3rem;
+    vertical-align: top;
 }
 
-contention tr {
+contention tr {}
 
-}
-
-contention > table {
-  margin-top: 0.5em;
+contention>table {
+    margin-top: 0.5em;
 }
 
 contention .input-field {
-  padding-left: 0em;
+    padding-left: 0em;
 }
 
 contention .contention__input {
-  padding-bottom: 0;
-  margin-bottom: 0;
-  padding-left: 0em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    padding-left: 0em;
 }
 
 .contention__close {
-  position: absolute;
-  top: 0.25em;
-  right: 0.25em;
-  color: #424242;
-  opacity: 0.3;
-  cursor: pointer;
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+    color: #424242;
+    opacity: 0.3;
+    cursor: pointer;
 }
+
 .contention__close:hover {
-  opacity: 1.0;
-  transition-duration: 0.3s;
+    opacity: 1.0;
+    transition-duration: 0.3s;
 }
+
 
 /*
 //==============================================================================
@@ -230,126 +242,127 @@ contention .contention__input {
 */
 
 #addArg {
-  display: block;
-  margin-bottom: 2em;
+    display: block;
+    margin-bottom: 2em;
 }
 
 arguement {
-  margin-left: 0.5em;
-  width: auto;
-  overflow-y: visible;
+    margin-left: 0.5em;
+    width: auto;
+    overflow-y: visible;
 }
 
 contention:hover .boxBtn {
-  opacity: 0.5
+    opacity: 0.5
 }
 
 #boxAction {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .arrow {
-  height: 5rem;
+    height: 5rem;
 }
 
 .input-field, input, .constructiveTitle {
-  margin: 0 0 0 0;
-  padding-bottom: 0;
+    margin: 0 0 0 0;
+    padding-bottom: 0;
 }
 
 textarea {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .boxBtn {
-  opacity: 0.2;
-  margin-bottom: 0.2em;
-  width: 30px;
-  height: 30px;
+    opacity: 0.2;
+    margin-bottom: 0.2em;
+    width: 30px;
+    height: 30px;
 }
 
 .boxBtn:hover {
-  opacity: 1 !important;
+    opacity: 1 !important;
 }
 
-.boxBtn > i {
-  line-height: 30px;
-
+.boxBtn>i {
+    line-height: 30px;
 }
 
 .argFocus {
-  position: absolute;
-  left: 1em;
-  bottom: 1em;
-  z-index: 5000;
+    position: absolute;
+    left: 1em;
+    bottom: 1em;
+    z-index: 5000;
 }
+
 
 /*
 //==============================================================================
 //BOX//
 //==============================================================================
 */
-.box {
 
-}
+.box {}
+
 div.input-field.constructiveTitle {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 td textarea.materialize-textarea {
-  margin-top: 0;
-  padding-top: 0;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .boxClose {
-  right: 0;
-  top: 0;
-  color: #D8D8D8;
-  opacity: 0.2;
+    right: 0;
+    top: 0;
+    color: #D8D8D8;
+    opacity: 0.2;
 }
 
 .boxClose:hover {
-  color: #424242;
-  opacity: 1;
+    color: #424242;
+    opacity: 1;
 }
 
 .boxCriticalBtn {
-  user-select: none;
-  max-width: 1em;
-  margin-top: -6px;
-  left: 0.05em;
-  top: 0.05em;
-  color: #D8D8D8;
-  opacity: 0.2;
-  width: 1em;
+    user-select: none;
+    max-width: 1em;
+    margin-top: -6px;
+    left: 0.05em;
+    top: 0.05em;
+    color: #D8D8D8;
+    opacity: 0.2;
+    width: 1em;
 }
 
-.boxCriticalBtn > i {
-  max-width: 1em;
-  display: inline;
-  line-height: 2.2rem;
-  font-size: 1.5rem;
+.boxCriticalBtn>i {
+    max-width: 1em;
+    display: inline;
+    line-height: 2.2rem;
+    font-size: 1.5rem;
 }
 
 .boxCriticalBtn:hover {
-  color: #424242;
-  opacity: 1;
-  cursor: pointer;
+    color: #424242;
+    opacity: 1;
+    cursor: pointer;
 }
 
 .boxCriticalBorder {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-.boxCriticalBorder > .boxCriticalBtn {
-  color: #424242;
-  opacity: 0.8;
+.boxCriticalBorder>.boxCriticalBtn {
+    color: #424242;
+    opacity: 0.8;
 }
 
-.constructiveTitle > .box__constructiveTitle__input {
-  margin-bottom: 0;
+.constructiveTitle>.box__constructiveTitle__input {
+    margin-bottom: 0;
 }
+
 
 /*
 //==============================================================================
@@ -357,36 +370,40 @@ td textarea.materialize-textarea {
 //==============================================================================
 */
 
-#lsManagerModal > .modal-content > table {
-  width: 70%;
+#lsManagerModal>.modal-content>table {
+    width: 70%;
 }
 
-#lsManagerModal > .modal-content > td {
-  width: 100px;
+#lsManagerModal>.modal-content>td {
+    width: 100px;
 }
 
 td .btn-flat {
-  padding: 0.2em;
+    padding: 0.2em;
 }
 
 .drop-box {
-  margin-left: 1em;
-  margin-top: 1em;
-  padding: 2em;
-  width: 20em;
+    margin-left: 1em;
+    margin-top: 1em;
+    padding: 2em;
+    width: 20em;
 }
+
 
 /*
 //==============================================================================
 //infoModal//
 //==============================================================================
 */
+
 .browser-support__entry {
-  line-height: 2em;
+    line-height: 2em;
 }
-.browser-support__entry > i {
-  vertical-align: middle;
+
+.browser-support__entry>i {
+    vertical-align: middle;
 }
+
 
 /*
 //==============================================================================
@@ -395,59 +412,58 @@ td .btn-flat {
 */
 
 confirmButton {
-  color: #424242;
-  opacity: 0.3;
-  user-select: none;
-
+    color: #424242;
+    opacity: 0.3;
+    user-select: none;
 }
 
 .confirmbutton__outline {
-  position: absolute;
-  z-index: 4;
-  display: none;
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-  border-width: 1px;
-  border-color: #424242;
-  border-style: solid;
+    position: absolute;
+    z-index: 4;
+    display: none;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    border-width: 1px;
+    border-color: #424242;
+    border-style: solid;
 }
 
 .confirmbutton__icon {
-  z-index: 5;
-  color: #424242;
-  position: absolute;
+    z-index: 5;
+    color: #424242;
+    position: absolute;
 }
 
 .confirmbutton__outline-show {
-  display: block;
+    display: block;
 }
 
 .confirmbutton__circle {
-  opacity: 0;
-  position: relative;
-  display: block;
-  z-index: 3;
-  background-color: #d8d8d8;
-  border-radius: 50%;
-  top: 50%;
-  margin-top: 0em;
-  left: 50%;
-  margin-left: 0em;
-  height: 0em;
-  width: 0em;
-  transition: width 2s, height 2s, margin-top 2s, margin-left 2s;
-  transition-timing-function: ease-in;
+    opacity: 0;
+    position: relative;
+    display: block;
+    z-index: 3;
+    background-color: #d8d8d8;
+    border-radius: 50%;
+    top: 50%;
+    margin-top: 0em;
+    left: 50%;
+    margin-left: 0em;
+    height: 0em;
+    width: 0em;
+    transition: width 2s, height 2s, margin-top 2s, margin-left 2s;
+    transition-timing-function: ease-in;
 }
 
 .confirmbutton__circle-expanding {
-  opacity: 1;
-  height: 2em;
-  width: 2em;
-  margin-top: 2em;
-  margin-left: 2em;
+    opacity: 1;
+    height: 2em;
+    width: 2em;
+    margin-top: 2em;
+    margin-left: 2em;
 }
 
 confirmButton:hover {
-  opacity: 1;
+    opacity: 1;
 }

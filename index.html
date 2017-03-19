@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html ng-app="flow" ng-controller="flowCtrl">
+<html ng-app="Flow">
 
 <head>
 	<title>Flow</title>
 	<meta charset="utf-8">
 	<!-- html5 version of http-equiv="Content-Type"... -->
-	<meta name="description" content="FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities">
+	<meta name="description" content="Flow.FastFlow is a webapp for flowing highschool debate">
 	<meta name="keywords" content="Debate">
 	<link rel="author" href="http://atowers.info" />
 	<link rel="canonical" href="https://flow.fastflowdebate.com" />
 </head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script src="bundle.js"></script>
-<div class="version__indicator">{{::version}}</div>
-
-<body ondrop="return false;">
+<link href="load.css" rel="stylesheet">
+<body ng-controller="flowCtrl">
+	<div class="version__indicator">{{version}}</div>
+	<div class="m-app-loading" ng-animate-children="true">
+			<!-- BEGIN: Actual animated container. -->
+			<div class="animated-container">
+				<img src="app.png">
+				<div class="messaging">
+					<h1>Fast Flow</h1>
+				</div>
+			</div>
+			<!-- END: Actual animated container. -->
+	</div>
 	<nav>
 		<div class="nav-wrapper purple">
 			<a href="#" class="brand-logo"><img id="navImg" src="app.png"></a>
@@ -47,99 +56,89 @@
 			</div>
 		</div>
 	</footer>
-</body>
-<div ng-controller="lsManager">
-	<div id="lsManagerModal" ngf-drop="uploadFiles($files)" class="card modal"
-		ngf-drag-over-class="'dragover'" ngf-multiple="true"
-		ngf-pattern="'.json'">
-		<div class="modal-content">
-			<h4>Manage Saved Flows</h4> {{message}}
-			<table class="highlight">
-				<thead>
-					<tr>
-						<th data-field="Name">Name</th>
-						<th data-field="Team1">Team</th>
-						<th data-field="Team2">Team</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="f in flowTable">
-						<td>{{f.name}}</td>
-						<td>{{f.teamL}}</td>
-						<td>{{f.teamR}}</td>
-						<td><a ng-click="open(f.id)" class="waves-effect waves-green btn-flat"><i class="material-icons">send</i></a></td>
-						<td><a ng-click="beginDelete(f.id)" class="waves-effect waves-red btn-flat"><i class="material-icons">close</i></a></td>
-						<td><a ng-click="download(f.id)" class="waves-effect waves-blue btn-flat"><i class="material-icons">file_download</i></a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="purple drop-box"><i class="material-icons left">file_upload</i> Drop Flows here to <b>Upload</b></div>
-		<div ngf-no-file-drop>Uploading flows is not supported in this browser</div>
-		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
-		</div>
-	</div>
-	<div id="delConfirmation" class="modal">
-		<div class="modal-content">
-			<h4>Delete Modal</h4>
-			<p>Are You sure you would like to delete this flow, this action is not reversible.</p>
-		</div>
-		<div class="modal-footer">
-			<a ng-click="completeDelete()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>
-			<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
-		</div>
-	</div>
-	<div id="unsavedModal" class="modal">
-		<div class="modal-content">
-			<h4>Work Unsaved</h4>
-			<p>Unless you save your flow the data will be lost!</p>
-		</div>
-		<div class="modal-footer">
-			<a ng-click="forceNewFlow()" class="modal-action modal-close waves-effect waves-red btn-flat">Continue</a>
-			<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
-		</div>
-	</div>
-</div>
-<div ng-controller="infoModal">
-	<div id="infoModal" class="modal">
-		<div class="modal-content">
-			<h3>Flow.FastFlow</h3>
-			<hr>
-			<div id="browser-support__modal">
-				<h4>Browser Information:</h4>
-				<div class="browser-support__entry">
-					Offline Support: <i ng-show="{{::serviceWorker}}" class="material-icons md-30">check</i><i ng-hide="{{::serviceWorker}}" class="material-icons">close</i>
-				</div>
-				<div class="browser-support__entry">
-					Save Flows: <i ng-show="{{::indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{::indexedDB}}" class="material-icons">close</i>
-				</div>
-				<div class="browser-support__entry">
-					Upload Flows: <i ng-show="{{::fileReader}}" class="material-icons md-30">check</i><i ng-hide="{{::fileReader}}" class="material-icons">close</i>
-				</div>
+	<div ng-controller="lsManager">
+		<div id="lsManagerModal" ngf-drop="uploadFiles($files)" class="card modal" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-pattern="'.json'">
+			<div class="modal-content">
+				<h4>Manage Saved Flows</h4> {{message}}
+				<table class="highlight">
+					<thead>
+						<tr>
+							<th data-field="Name">Name</th>
+							<th data-field="Team1">Team</th>
+							<th data-field="Team2">Team</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="f in flowTable">
+							<td>{{f.name}}</td>
+							<td>{{f.teamL}}</td>
+							<td>{{f.teamR}}</td>
+							<td><a ng-click="open(f.id)" class="waves-effect waves-green btn-flat"><i class="material-icons">send</i></a></td>
+							<td><a ng-click="beginDelete(f.id)" class="waves-effect waves-red btn-flat"><i class="material-icons">close</i></a></td>
+							<td><a ng-click="download(f.id)" class="waves-effect waves-blue btn-flat"><i class="material-icons">file_download</i></a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<hr>
-			<h4>Offline:</h4>
-			Access the offline app by opening the web page once and refreshing it. After that, you can close the tab, turn off your internet, and navigate back to the page and it should load. Magic! Saved flows are also accessible offline as they are saved to your browser.
-			<hr>
-			<h4>Feedback:</h4>
-			Please make any bug reports as issues on the <a href="https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues">Github</a>. Private messaging u/Zarkoix on Reddit also works.
-			<hr>
-			<h4>Upload/Download:</h4>
-			You can download flows from the app as lightweight json documents. Flows can be uploaded into the app by dragging them onto the box in the Flow Manager modal.
-			<hr>
-			<h4>Hotkeys:</h4>
-			Alt+1: New Contention<br>
-			Alt+2 or Enter: New Argument<br>
-			Shift+Enter: Move Argument to New Contention<br>
-			Alt+3: New Defense (Blue Sticky)<br>
-			Alt+4: New Response (Red Sticky)<br>
-			Alt+5: New Extension (Green Arrow Sticky)
+			<div class="purple drop-box"><i class="material-icons left">file_upload</i> Drop Flows here to <b>Upload</b></div>
+			<div ngf-no-file-drop>Uploading flows is not supported in this browser</div>
+			<div class="modal-footer">
+				<a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+			</div>
 		</div>
-		<div class="modal-footer">
+		<div id="delConfirmation" class="modal">
+			<div class="modal-content">
+				<h4>Delete Modal</h4>
+				<p>Are You sure you would like to delete this flow, this action is not reversible.</p>
+			</div>
+			<div class="modal-footer">
+				<a ng-click="completeDelete()" class="modal-action modal-close waves-effect waves-red btn-flat">Delete</a>
+				<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
+			</div>
+		</div>
+		<div id="unsavedModal" class="modal">
+			<div class="modal-content">
+				<h4>Work Unsaved</h4>
+				<p>Unless you save your flow the data will be lost!</p>
+			</div>
+			<div class="modal-footer">
+				<a ng-click="forceNewFlow()" class="modal-action modal-close waves-effect waves-red btn-flat">Continue</a>
+				<button class="modal-action modal-close waves-effect waves-red btn-flat">Never mind</button>
+			</div>
 		</div>
 	</div>
-</div>
+	<div ng-controller="infoModal">
+		<div id="infoModal" class="modal">
+			<div class="modal-content">
+				<h3>Flow.FastFlow</h3>
+				<hr>
+				<div id="browser-support__modal">
+					<h4>Browser Information:</h4>
+					<div class="browser-support__entry">
+						Offline Support: <i ng-show="{{::serviceWorker}}" class="material-icons md-30">check</i><i ng-hide="{{::serviceWorker}}" class="material-icons">close</i>
+					</div>
+					<div class="browser-support__entry">
+						Save Flows: <i ng-show="{{::indexedDB}}" class="material-icons md-30">check</i><i ng-hide="{{::indexedDB}}" class="material-icons">close</i>
+					</div>
+					<div class="browser-support__entry">
+						Upload Flows: <i ng-show="{{::fileReader}}" class="material-icons md-30">check</i><i ng-hide="{{::fileReader}}" class="material-icons">close</i>
+					</div>
+				</div>
+				<hr>
+				<h4>Offline:</h4> Access the offline app by opening the web page once and refreshing it. After that, you can close the tab, turn off your internet, and navigate back to the page and it should load. Magic! Saved flows are also accessible offline as they are saved to
+				your browser.
+				<hr>
+				<h4>Feedback:</h4> Please make any bug reports as issues on the <a href="https://github.com/FastFlowDebate/Flow.FastFlowDebate/issues">Github</a>. Private messaging u/Zarkoix on Reddit also works.
+				<hr>
+				<h4>Upload/Download:</h4> You can download flows from the app as lightweight json documents. Flows can be uploaded into the app by dragging them onto the box in the Flow Manager modal.
+				<hr>
+				<h4>Hotkeys:</h4> Alt+1: New Contention<br> Alt+2 or Enter: New Argument<br> Shift+Enter: Move Argument to New Contention<br> Alt+3: New Defense (Blue Sticky)<br> Alt+4: New Response (Red Sticky)<br> Alt+5: New Extension (Green Arrow Sticky)
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</body>
 <script>
 	(function(i, s, o, g, r, a, m) {
 		i['GoogleAnalyticsObject'] = r;
@@ -155,5 +154,5 @@
 	ga('create', 'UA-92780519-2', 'auto');
 	ga('send', 'pageview');
 </script>
-
+<script src="bundle.js"></script>
 </html>
