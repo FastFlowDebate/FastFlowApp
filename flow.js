@@ -53,7 +53,7 @@ var flowApp = angular.module('flow', ['ngFileUpload'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.9.1'
+        $scope.version = '0.9.2'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
 

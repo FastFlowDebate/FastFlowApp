@@ -1,12 +1,12 @@
 {
   "name": "flow.fastflowdebate",
   "beta": true,
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "FastFlow flowing as a webapp using Chrome Service Worker's for offline capabilities",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "./node_modules/.bin/webpack --verbose"
+    "webpack": "./node_modules/.bin/webpack"
   },
   "repository": {
     "type": "git",

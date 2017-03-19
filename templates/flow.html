@@ -1,6 +1,6 @@
 <div ng-class="f.isExpanded()" class="flow grey" ng-keydown="f.keydown($event)" ng-keyup="f.keyup($event)" tab-index="0">
-  <div class="input-field card">
-      <input type="text" ng-model="f.team" placeholder="Team Name and Side">
+  <div class="input-field card flow__input-field">
+      <input type="text" class="flow__input" ng-model="f.team" placeholder="Team Name and Side">
   </div>
   <contention ng-repeat="x in f.data track by $index" name="x.title" args="x.args" contindex="$index" contrm="f.removeContention($index)"></contention>
   <div ng-click="f.newContention()" class="waves-effect waves-teal btn-flat flow__addContention">New Contention</div>

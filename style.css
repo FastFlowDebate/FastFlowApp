@@ -54,6 +54,7 @@ main > .input-field:hover {
 
 #flowTitle {
   padding: 0.1em;
+  margin-bottom: 0;
 }
 
 #betaChip {
@@ -101,6 +102,10 @@ flow {
   width: 100%;
   overflow-x: hidden;
   height: auto;
+}
+
+flow .flow__input {
+  margin-bottom: 0;
 }
 
 .flow {
@@ -165,6 +170,10 @@ contention {
   margin-left: 0.5em;
 }
 
+.contention__card {
+  padding: 0.2em;
+}
+
 contention table {
   padding-top: 0.5em;
   width: auto;
@@ -192,7 +201,13 @@ contention > table {
 }
 
 contention .input-field {
-  padding-left: 1em;
+  padding-left: 0em;
+}
+
+contention .contention__input {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-left: 0em;
 }
 
 .contention__close {
@@ -220,6 +235,7 @@ contention .input-field {
 }
 
 arguement {
+  margin-left: 0.5em;
   width: auto;
   overflow-y: visible;
 }
@@ -238,7 +254,7 @@ contention:hover .boxBtn {
 }
 
 .input-field, input, .constructiveTitle {
-  margin: 0 0 0 0!important;
+  margin: 0 0 0 0;
   padding-bottom: 0;
 }
 
@@ -302,8 +318,8 @@ td textarea.materialize-textarea {
   user-select: none;
   max-width: 1em;
   margin-top: -6px;
-  left: 0;
-  top: 0;
+  left: 0.05em;
+  top: 0.05em;
   color: #D8D8D8;
   opacity: 0.2;
   width: 1em;
@@ -329,6 +345,10 @@ td textarea.materialize-textarea {
 .boxCriticalBorder > .boxCriticalBtn {
   color: #424242;
   opacity: 0.8;
+}
+
+.constructiveTitle > .box__constructiveTitle__input {
+  margin-bottom: 0;
 }
 
 /*
