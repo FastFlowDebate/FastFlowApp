@@ -35,14 +35,14 @@ if (indexedDB && 'serviceWorker' in navigator) {
     })
 } else {
     //TODO: add a browser error notif
-    alert('flow requires a browser with indexedDB and service workers')
+    alert('Flow requires a browser with indexedDB and service workers')
 }
 
 var angular = require('angular')
 require('ng-file-upload')
 require('angular-animate')
 var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
-    .controller('flowCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    .controller('flowCtrl', ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
         $('#lsManagerModal').modal()
         $('#infoModal').modal()
         $('#delConfirmation').modal()
@@ -54,9 +54,10 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.9.3'
+        $scope.version = '0.9.4'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
+        var unwatchFlow = function () {}
 
         //check the most uptodate verion number mwahhahah
         var xhr = new XMLHttpRequest()
@@ -78,26 +79,32 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
         }
         xhr.send(null)
 
-        $scope.watchFlow = function () {
-          var unwatchFlow =  $scope.$watch('flow', function(newVal, oldVal) {
-              $scope.isSaved = false
-              unwatchFlow()
+        var firstLoad = true
+        var watchFlow = function () {
+           unwatchFlow =  $scope.$watch('flow', function(newVal, oldVal) {
+             if (firstLoad) {
+               $timeout(function (){
+                 firstLoad = false
+               })
+             } else {
+               $scope.isSaved = false //there is a dif so set false
+               unwatchFlow() //delete itself
+               unwatchFlow = function () {} //bind unwatch function to nothing until new watcher created in refreshSave()
+             }
           }, true)
-          return unwatchFlow
         }
         $scope.refreshSaved = function() {
-            setTimeout(function() { //change to false after it starts
-                $scope.isSaved = true
-                $scope.watchFlow()
-                $scope.$apply()
-            }, 100)
+            unwatchFlow() //delete old watcher
+            watchFlow() //create new watcher and rebinds delete old watcher function
+            $scope.isSaved = true
+            firstLoad = true
         }
         $scope.refreshSaved()
         $scope.openFromLS = function(n) {
             $rootScope.fromSaved = true
             var transaction = db.transaction(["flows"], "readwrite")
             transaction.onerror = function(event) {
-                alert('Error, opening flow failed!', 4000) // 4000 is the duration of the toast
+                alert('Error, opening flow failed!') // 4000 is the duration of the toast
             }
             var objectStore = transaction.objectStore("flows")
             var request = objectStore.get(n)
@@ -107,9 +114,10 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                 $scope.isSaved = true
                 $scope.$apply()
                 $scope.refreshSaved()
-                setTimeout(function () {
+                setTimeout(function () { //set from save back to false after it has hopefully finished loading
                   $rootScope.fromSaved = false
-                },200)
+                  $('.tooltipped').tooltip()
+                },400)
             }
             $('#lsManagerModal').modal('close')
         }
@@ -121,7 +129,7 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                         Materialize.toast('Saved', 2000) // 4000 is the duration of the toast
                     }
                     transaction.onerror = function(event) {
-                        alert('Error, not saved!', 4000) // 4000 is the duration of the toast
+                        alert('Error, not saved!') // 4000 is the duration of the toast
                     }
                     var objectStore = transaction.objectStore("flows")
                     var request = objectStore.add($scope.flow)
@@ -224,15 +232,6 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
               }
           }
         }
-        $('.dropdown-button').dropdown({
-            inDuration: 300,
-            outDuration: 225,
-            constrain_width: false, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: false, // Displays dropdown below the button
-            alignment: 'left' // Displays dropdown with edge aligned to the left of button
-        })
         $scope.open = function(n) {
             $scope.$parent.openFromLS(n)
         }
@@ -278,8 +277,6 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
         $scope.uploadFiles = function(files) {
           if (FileReader) {
             if (files && files.length) {
-              console.log(files.length + ' files')
-              console.log(files)
               for (i in files) {
                 (function(file) {
                   var reader = new FileReader()
@@ -332,13 +329,14 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                 argfocus: '&',
                 removeBox: '&boxrm'
             },
-            controller: ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
-                this.isFocused = false
-                this.setfocus = function (focus) {
-                  this.isFocused = focus //set itself to focused
-                  this.argfocus({focus:focus}) //set parent arg to focused
+            controller: function() {
+                var b = this
+                b.isFocused = false
+                b.setfocus = function (focus) {
+                  b.isFocused = focus //set itself to focused
+                  b.argfocus({focus:focus}) //set parent arg to focused
                 }
-                this.color = function(type, critical) {
+                b.color = function(type, critical) {
                     var style = ''
                     if (type == 'extension') style = 'blue'
                     if (type == 'response') style = 'red'
@@ -350,23 +348,23 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                     }
                     return style
                 }
-                this.rmbox = function() {
-                    this.removeBox({
-                        index: this.index
+                b.rmbox = function() {
+                    b.removeBox({
+                        index: b.index
                     })
                 }
-                this.critical = false
-                this.toggleCritical = function() {
-                    this.critical = !this.critical
+                b.critical = false
+                b.toggleCritical = function() {
+                    b.critical = !b.critical
                 }
-                this.isCritical = function() {
-                    if (this.critical) return 'boxCriticalBorder'
+                b.isCritical = function() {
+                    if (b.critical) return 'boxCriticalBorder'
                     return ''
                 }
-                this.getStyle = function(type) {
-                    return this.color(type, this.isCritical())
+                b.getStyle = function(type) {
+                    return b.color(type, b.isCritical())
                 }
-            }],
+            },
             link: function(scope, element, attr, ctrl) {
               //when box is created focus either the tagline if first box or the textarea
               setTimeout(function () {
@@ -466,30 +464,31 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                 index: '<contindex',
                 removeContention: '&contrm'
             },
-            controller: ['$scope', function($scope) {
-                this.isFocused = false
+            controller: function() {
+                var c = this
+                c.isFocused = false
 
-                this.newArg = function() {
-                    this.args.push([{
+                c.newArg = function() {
+                    c.args.push([{
                         "title": "",
                         "text": "",
                         "type": "constructive"
                     }])
                 }
-                this.removeArgument = function (index) { //removing arguement from contention
-                    this.args.splice(index, 1)
+                c.removeArgument = function (index) { //removing arguement from contention
+                    c.args.splice(index, 1)
                 }
-                this.rmcont = function() { //remove contention called from the contention
+                c.rmcont = function() { //remove contention called from the contention
                     $('.tooltipped').tooltip('remove')
-                    $('.tooltipped').tooltip()
-                    this.removeContention({
-                        index: this.index
+                    c.removeContention({
+                        index: c.index
                     })
+                    $('.tooltipped').tooltip()
                 }
-                this.setfocus = function (args) {
-                  this.isFocused = args //set self focus to focus of box
+                c.setfocus = function (args) {
+                  c.isFocused = args //set self focus to focus of box
                 }
-            }],
+            },
             link: function(scope, element, attr, ctrl) {
               scope.$on('newArugment', function(events, args) {
                     if (ctrl.isFocused) ctrl.newArg() //not really a way to link in here as no focus
@@ -513,65 +512,66 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                 team: '='
             },
             controller: ['$scope', '$timeout', function($scope, $timeout) {
-                this.expand = false
-                this.toggleExpand = function() {
-                    this.expand = !this.expand
+                var f = this
+                f.expand = false
+                f.toggleExpand = function() {
+                    f.expand = !f.expand
                 }
-                this.isExpanded = function() {
-                    if (this.expand) return 'flowExpanded flow'
+                f.isExpanded = function() {
+                    if (f.expand) return 'flowExpanded flow'
                     else return 'flow'
                 }
-                this.newContention = function() {
-                    this.data.push({
+                f.newContention = function() {
+                    f.data.push({
                         "title": "",
                         "args": []
                     })
                 }
-                this.newContentionFromData = function(boxes) { // using scope not this to remain accessible within $on
-                    this.data.push({
+                f.newContentionFromData = function(boxes) { // using scope not this to remain accessible within $on
+                    f.data.push({
                         "title": "",
                         "args": [boxes]
                     })
                 }
-                this.removeContention = function(index) {
-                    this.data.splice(index, 1)
+                f.removeContention = function(index) {
+                    f.data.splice(index, 1)
                 }
 
                 //Hot Key functionality
-                this.altDown = false
+                f.altDown = false
                 var isCoolDown = false
-                this.keydown = function (keyID) {
+                f.keydown = function (keyID) {
                   if(!isCoolDown){
                     // sets altDown to true if the shift key (key code is 16) is pressed
                     keyCode = keyID.keyCode
                     if (keyCode === 18) {
-                        this.altDown = true
+                        f.altDown = true
                     }
                     if (keyCode === 16) {
-                        this.shiftDown = true
+                        f.shiftDown = true
                     }
                     // sends the message if "enter" is pressed and "alt" is being held down
-                    if(keyCode === 49 && this.altDown) {
+                    if(keyCode === 49 && f.altDown) {
                       //new contention
                         event.preventDefault()
-                        this.newContention()
-                    } else if(keyCode === 50 && this.altDown) {
+                        f.newContention()
+                    } else if(keyCode === 50 && f.altDown) {
                       //new arguement
                         event.preventDefault()
                         $scope.$broadcast('newArugment')
-                    } else if(keyCode === 51 && this.altDown) {
+                    } else if(keyCode === 51 && f.altDown) {
                       //defend
                         event.preventDefault()
                         $scope.$broadcast('boxDefend')
-                    } else if(keyCode === 52 && this.altDown) {
+                    } else if(keyCode === 52 && f.altDown) {
                       //respond
                         event.preventDefault()
                         $scope.$broadcast('boxRespond')
-                    } else if(keyCode === 53 && this.altDown) {
+                    } else if(keyCode === 53 && f.altDown) {
                       //extend
                         event.preventDefault()
                         $scope.$broadcast('boxExtend')
-                    } else if(keyCode === 13 && this.shiftDown) {
+                    } else if(keyCode === 13 && f.shiftDown) {
                         event.preventDefault()
                         $scope.$broadcast('shiftArg')
                     } else if(keyCode === 13) {
@@ -585,11 +585,11 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                   }
                 }
                 // sets altDown/shiftDown to false if the alt key has been released
-                this.keyup = function (keyID) {
+                f.keyup = function (keyID) {
                     if(keyID.keyCode === 18) {
-                        this.altDown = false
+                        f.altDown = false
                     } else if (keyID.keyCode === 16) {
-                      this.shiftDown = false
+                      f.shiftDown = false
                     }
                 }
             }],
@@ -624,7 +624,6 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                 }
                 this.leave = function() {
                     this.active = false
-
                 }
             },
             link: function(scope, element, attr, ctrl) {
@@ -636,11 +635,9 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
         }
     })
     .directive('mAppLoading', ['$animate', function($animate) {
-                    // Return the directive configuration.
                     return({
                         link: function (scope, element, attributes) {
-                          console.log('leaviinnnnn')
-                          $animate.leave(element.children().eq(0)).then(
+                          $animate.leave(element.children().eq(0)).then( //remove itself on link function which is end of loading scren
                               function cleanupAfterAnimation () {
                                   element.remove()
                                   scope = element = attributes = null
@@ -649,6 +646,5 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
                         },
                         restrict: "C"
                     })
-                    // I bind the JavaScript events to the scope.
 
                 }])

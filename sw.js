@@ -37,8 +37,8 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["app.png","7e10f61ffab9738847d858fdec422427"],["arrow.svg","d078840dc45eae69c0fa2d1a8a3b15ee"],["bundle.js","48abc0f87ff9386fce13ff89edc7636e"],["index.html","5d05aa6149d38fbc28288d9aec2f6aaf"],["load.css","8f89363b617294268fb227f0179c2f19"],["templates/arg.html","656bbcf06efe890099ce49e0c133d9d0"],["templates/box.html","6290e297c45bd4d9b8e527fff3786350"],["templates/confirmButton.html","2b05037feb6dfe9f3adbba2de2872457"],["templates/contention.html","c5e823192d108aeb15cbb0cb32f3b476"],["templates/flow.html","8cbf188cf2825f368648da814422f4fe"]];
-var cacheName = 'sw-precache-v3-flow0.9.3-' + (self.registration ? self.registration.scope : '');
+var precacheConfig = [["app.png","7e10f61ffab9738847d858fdec422427"],["arrow.svg","d078840dc45eae69c0fa2d1a8a3b15ee"],["bundle.js","3f5d26416399e4fa4281c6bf513c795a"],["index.html","f45a21ab370297627b4c16f5b353b09a"],["load.css","8f89363b617294268fb227f0179c2f19"],["templates/arg.html","656bbcf06efe890099ce49e0c133d9d0"],["templates/box.html","6290e297c45bd4d9b8e527fff3786350"],["templates/confirmButton.html","2b05037feb6dfe9f3adbba2de2872457"],["templates/contention.html","c5e823192d108aeb15cbb0cb32f3b476"],["templates/flow.html","8cbf188cf2825f368648da814422f4fe"]];
+var cacheName = 'sw-precache-v3-flow0.9.4-' + (self.registration ? self.registration.scope : '');
 
 
 var ignoreUrlParametersMatching = [/^utm_/];

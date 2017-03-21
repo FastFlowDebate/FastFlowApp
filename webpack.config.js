@@ -23,7 +23,7 @@ module.exports = {
         }
     },
     plugins: [
-        /*new webpackUglifyJsPlugin({
+        new webpackUglifyJsPlugin({
           cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
           debug: true,
           minimize: true,
@@ -34,7 +34,7 @@ module.exports = {
           compressor: {
             warnings: false
           }
-        }),*/
+        }),
         new SWPrecacheWebpackPlugin({
           cacheId: 'flow' + pjson.version,
           filename: 'sw.js',
