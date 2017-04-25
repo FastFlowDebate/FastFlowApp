@@ -54,7 +54,7 @@ var flowApp = angular.module('Flow', ['ngFileUpload', 'ngAnimate'])
         $scope.flow.dataR = []
         $scope.flow.rightTeam
         $scope.flow.title
-        $scope.version = '0.9.4'
+        $scope.version = '0.9.5'
         $scope.key = 0 //0 means unsaved, otherwise key in indexedDB
         $scope.isSaved = true
         var unwatchFlow = function () {}
